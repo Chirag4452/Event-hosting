@@ -10,6 +10,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 import { generalRateLimit } from './middleware/rateLimiter.js';
 import { registrationSchema } from './schemas/userSchemas.js';
 import User from './models/User.js';
+import mongoose from 'mongoose';
 
 // Load environment variables
 dotenv.config();
@@ -119,6 +120,54 @@ app.post('/api/test-model', async (req, res) => {
   }
 });
 
+// Test MongoDB connection endpoint
+app.get('/api/test-db', async (req, res) => {
+  try {
+    console.log('🔍 Testing MongoDB connection...');
+    
+    // Check connection status
+    const connectionState = mongoose.connection.readyState;
+    const states = {
+      0: 'disconnected',
+      1: 'connected',
+      2: 'connecting',
+      3: 'disconnecting'
+    };
+    
+    console.log(`📊 Connection state: ${states[connectionState]} (${connectionState})`);
+    
+    if (connectionState === 1) {
+      // Test database operations
+      const testCollection = mongoose.connection.db.collection('test');
+      await testCollection.insertOne({ test: true, timestamp: new Date() });
+      await testCollection.deleteOne({ test: true });
+      
+      res.status(200).json({
+        success: true,
+        message: 'MongoDB connection test passed',
+        connectionState: states[connectionState],
+        database: mongoose.connection.db.databaseName,
+        host: mongoose.connection.host
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'MongoDB not connected',
+        connectionState: states[connectionState],
+        error: 'NOT_CONNECTED'
+      });
+    }
+  } catch (error) {
+    console.error('❌ MongoDB connection test failed:', error);
+    res.status(500).json({
+      success: false,
+      message: 'MongoDB connection test failed',
+      error: error.message,
+      connectionState: mongoose.connection.readyState
+    });
+  }
+});
+
 // Root route for basic testing
 app.get('/', (req, res) => {
   res.status(200).json({
@@ -131,7 +180,8 @@ app.get('/', (req, res) => {
       registrations: '/api/registrations',
       testRegister: '/api/test-register',
       testSchema: '/api/test-schema',
-      testModel: '/api/test-model'
+      testModel: '/api/test-model',
+      testDb: '/api/test-db'
     }
   });
 });
