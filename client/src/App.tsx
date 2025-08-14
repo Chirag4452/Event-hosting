@@ -1,23 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
-import ConnectionTest from "./components/ConnectionTest";
+import ApiTest from "./pages/ApiTest";
+import Navigation from "./components/Navigation";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-gray-50">
-        {/* Connection status header */}
-        <div className="bg-white border-b shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 py-2">
-            <ConnectionTest />
-          </div>
-        </div>
-        
-        {/* Main content */}
+        <Navigation />
         <Routes>
           <Route path="/" element={<Register />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/api-test" element={<ApiTest />} />
         </Routes>
       </div>
     </BrowserRouter>

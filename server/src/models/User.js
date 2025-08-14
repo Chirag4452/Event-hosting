@@ -8,12 +8,13 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
     },
-    parentName: {
+    parent_name: {
         type: String,
         required: true,
     },
-    parentPhone: {
+    parent_phone: {
         type: String,
         required: true,
     },

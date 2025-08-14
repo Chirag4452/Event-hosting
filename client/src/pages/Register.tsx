@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
-
-// Type definitions based on user schemas
-interface UserRegistrationData {
-  name: string;
-  email: string;
-  parent_name: string;
-  parent_phone: string;
-  grade: string;
-}
-
-interface PaymentData {
-  amount: number;
-  currency: string;
-  order_id: string;
-}
+import { registerUser } from '../services/api';
+import type { UserRegistrationData, PaymentData, RegistrationRequest } from '../services/api';
+import ServerStatus from '../components/ServerStatus';
+import axios from 'axios';
 
 const Register: React.FC = () => {
   // Form state management
@@ -57,7 +46,6 @@ const Register: React.FC = () => {
     }
   };
 
-
   // Form validation based on user schemas
   const validateForm = (): boolean => {
     const newErrors: Partial<UserRegistrationData> = {};
@@ -97,7 +85,7 @@ const Register: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
+  // Handle form submission using axios
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     
@@ -109,19 +97,16 @@ const Register: React.FC = () => {
     setSubmitMessage('');
 
     try {
-      // Simulate API call - replace with actual endpoint
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: formData,
-          payment: paymentData
-        }),
-      });
+      // Prepare registration data
+      const registrationData: RegistrationRequest = {
+        user: formData,
+        payment: paymentData
+      };
 
-      if (response.ok) {
+      // Use axios service to register user
+      const response = await registerUser(registrationData);
+
+      if (response.data.success) {
         setSubmitMessage('Registration successful! You will receive a confirmation email shortly.');
         // Reset form after successful submission
         setFormData({
@@ -137,10 +122,21 @@ const Register: React.FC = () => {
           order_id: ''
         });
       } else {
-        setSubmitMessage('Registration failed. Please try again.');
+        setSubmitMessage(response.data.message || 'Registration failed. Please try again.');
       }
-    } catch (error) {
-      setSubmitMessage('An error occurred. Please check your connection and try again.');
+    } catch (error: unknown) {
+      // Handle different types of errors
+      if (axios.isAxiosError(error)) {
+        // Server responded with error status
+        const errorMessage = error.response?.data?.message || 'Server error occurred';
+        setSubmitMessage(`Registration failed: ${errorMessage}`);
+      } else if (error instanceof Error) {
+        // Something else happened
+        setSubmitMessage(`An error occurred: ${error.message}`);
+      } else {
+        setSubmitMessage('An unexpected error occurred. Please try again.');
+      }
+      console.error('Registration error:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -157,6 +153,11 @@ const Register: React.FC = () => {
           <p className="text-lg text-gray-600">
             Join us for an amazing event experience
           </p>
+        </div>
+
+        {/* Server Status Indicator */}
+        <div className="text-center mb-4">
+          <ServerStatus showDetails={true} />
         </div>
 
         {/* Main Registration Form */}
@@ -278,7 +279,6 @@ const Register: React.FC = () => {
                 <p className="mt-1 text-sm text-red-600">{errors.grade}</p>
               )}
             </div>
-
 
             {/* Submit Button */}
             <div className="pt-6">

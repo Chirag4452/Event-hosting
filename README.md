@@ -1,76 +1,72 @@
-# Event Hosting Application
+# Event Hosting Platform
 
-A full-stack event hosting application with React frontend and Node.js backend.
+A full-stack event registration platform with React frontend and Node.js backend, connected via Axios.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js (v18 or higher)
 - MongoDB (running locally or cloud instance)
-- npm or yarn
 
-### Installation
+### Backend Setup
+```bash
+cd server
+npm install
+npm run dev
+```
 
-1. **Install all dependencies:**
-   ```bash
-   npm run install:all
-   ```
+The backend will start on `http://localhost:5000`
 
-2. **Set up environment variables:**
-   Create a `.env` file in the `server` directory:
-   ```env
-   MONGODB_URI=mongodb://localhost:27017/event-hosting
-   PORT=5000
-   NODE_ENV=development
-   ```
+### Frontend Setup
+```bash
+cd client
+npm install
+npm run dev
+```
 
-3. **Start both frontend and backend:**
-   ```bash
-   npm run dev
-   ```
+The frontend will start on `http://localhost:5173`
 
-   This will start:
-   - Backend server on `http://localhost:5000`
-   - Frontend dev server on `http://localhost:5173`
+## 🔗 API Connection
 
-## 🔧 Development
+The frontend and backend are connected using **Axios** with the following features:
 
-### Backend (Server)
-- **Port:** 5000
-- **API Base:** `/api`
-- **Health Check:** `/api/health`
-- **Registration:** `/api/register`
+### API Service (`client/src/services/api.ts`)
+- **Base URL**: `http://localhost:5000/api`
+- **Timeout**: 10 seconds
+- **Interceptors**: Request/response logging and error handling
+- **TypeScript**: Fully typed API responses and requests
 
-### Frontend (Client)
-- **Port:** 5173
-- **API Proxy:** Configured to forward `/api` requests to backend
-- **Build Tool:** Vite
-
-### Available Scripts
-
-- `npm run dev` - Start both frontend and backend
-- `npm run dev:server` - Start only backend
-- `npm run dev:client` - Start only frontend
-- `npm run build` - Build frontend for production
-- `npm run start` - Start production backend
-
-## 🌐 API Endpoints
-
-### Health Check
-- `GET /api/health` - Server status
-
-### User Registration
-- `POST /api/register` - Register new user
+### Available Endpoints
+- `GET /api/health` - Server health check
+- `POST /api/register` - User registration
 - `GET /api/registrations` - Get all registrations
 
-## 🔗 Frontend-Backend Connection
+### Error Handling
+- Network errors (no response)
+- Server errors (4xx, 5xx responses)
+- Validation errors
+- Timeout handling
 
-The frontend and backend are connected through:
+## 🧪 Testing the Connection
 
-1. **Vite Proxy Configuration** - Forwards `/api` requests to backend during development
-2. **Axios Instance** - Configured with relative URLs and proper error handling
-3. **CORS** - Backend configured to accept requests from frontend
-4. **Connection Test Component** - Shows real-time backend connection status
+### 1. API Test Page
+Navigate to `/api-test` to test all API endpoints:
+- Health check
+- Get registrations
+- User registration
+
+### 2. Server Status Indicator
+The `ServerStatus` component shows real-time connection status:
+- 🟢 Online - Server responding
+- 🔴 Offline - Server unreachable
+- 🟡 Checking - Verifying connection
+
+### 3. Console Logging
+Check browser console for detailed API request/response logs:
+```
+🚀 API Request: POST /api/register
+✅ API Response: 200 /api/register
+```
 
 ## 📁 Project Structure
 
@@ -78,63 +74,87 @@ The frontend and backend are connected through:
 Event-hosting/
 ├── client/                 # React frontend
 │   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── services/      # API services
-│   │   ├── config/        # Configuration files
-│   │   └── pages/         # Page components
-│   └── vite.config.ts     # Vite configuration with proxy
+│   │   ├── components/    # Reusable components
+│   │   ├── pages/         # Page components
+│   │   ├── services/      # API service layer
+│   │   └── schemas/       # Validation schemas
+│   └── package.json
 ├── server/                 # Node.js backend
 │   ├── src/
-│   │   ├── controllers/   # Route controllers
-│   │   ├── middleware/    # Express middleware
-│   │   ├── models/        # MongoDB models
+│   │   ├── controllers/   # Route handlers
+│   │   ├── models/        # Database models
 │   │   ├── routes/        # API routes
-│   │   └── server.js      # Main server file
+│   │   └── middleware/    # Express middleware
 │   └── package.json
-└── package.json           # Root package.json with dev scripts
+└── README.md
 ```
 
-## 🛠️ Troubleshooting
+## 🔧 Configuration
+
+### Backend Environment Variables
+Create `.env` file in `server/` directory:
+```env
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/event-hosting
+```
+
+### Frontend API Configuration
+Update `client/src/services/api.ts` to change:
+- Base URL
+- Timeout settings
+- Headers
+
+## 🚨 Troubleshooting
 
 ### Common Issues
 
-1. **Backend not starting:**
+1. **CORS Errors**
+   - Ensure backend CORS middleware is enabled
+   - Check frontend URL matches backend CORS settings
+
+2. **Connection Refused**
+   - Verify backend is running on port 5000
    - Check MongoDB connection
-   - Verify port 5000 is available
-   - Check environment variables
 
-2. **Frontend can't connect to backend:**
-   - Ensure backend is running on port 5000
-   - Check Vite proxy configuration
-   - Verify CORS settings
+3. **TypeScript Errors**
+   - Run `npm run build` in client directory
+   - Check type definitions in API service
 
-3. **API requests failing:**
-   - Check browser console for errors
-   - Verify API endpoints in backend
-   - Check network tab for request/response
+### Debug Mode
+Enable detailed logging by checking browser console for:
+- API request details
+- Response data
+- Error information
 
-### Connection Test
+## 📚 Dependencies
 
-The application includes a `ConnectionTest` component that shows:
-- Real-time backend connection status
-- Last successful connection timestamp
-- Error messages if connection fails
-- Manual connection test button
+### Frontend
+- React 19
+- TypeScript
+- Axios (HTTP client)
+- React Router (navigation)
+- Tailwind CSS (styling)
+- Zod (validation)
 
-## 🚀 Production Deployment
+### Backend
+- Express.js
+- MongoDB (Mongoose)
+- CORS
+- Helmet (security)
+- Rate limiting
 
-1. **Build frontend:**
-   ```bash
-   npm run build
-   ```
+## 🎯 Next Steps
 
-2. **Start production backend:**
-   ```bash
-   npm run start
-   ```
+1. **Authentication**: Add JWT-based user authentication
+2. **Database**: Implement proper data persistence
+3. **Validation**: Add comprehensive form validation
+4. **Testing**: Add unit and integration tests
+5. **Deployment**: Deploy to production environment
 
-3. **Update environment variables** for production settings
+## 📞 Support
 
-## 📝 License
-
-ISC
+For issues or questions:
+1. Check console logs for error details
+2. Verify server status indicator
+3. Test API endpoints individually
+4. Check network tab for failed requests

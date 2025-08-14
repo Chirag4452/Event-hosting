@@ -1,13 +1,15 @@
 import { z } from "zod";
 
-export const userSchema = z.object({
+// Individual user data schema
+export const userDataSchema = z.object({
     name: z.string().min(3).max(50),
     email: z.string().email(),
-    parentName: z.string().min(3).max(50),
-    parentPhone: z.string().min(10).max(10),
+    parent_name: z.string().min(3).max(50),
+    parent_phone: z.string().min(10).max(10),
     grade: z.string().min(1).max(2),
 });
 
+// Payment data schema
 export const paymentSchema = z.object({
     amount: z
       .number()
@@ -17,7 +19,16 @@ export const paymentSchema = z.object({
       .string()
       .default("INR"),
     
-    orderId: z
+    order_id: z
       .string()
       .min(1, "Order ID is required")
-  });
+});
+
+// Complete registration request schema
+export const registrationSchema = z.object({
+    user: userDataSchema,
+    payment: paymentSchema
+});
+
+// Legacy schema for backward compatibility
+export const userSchema = userDataSchema;
