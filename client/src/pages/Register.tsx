@@ -5,6 +5,7 @@ import type { UserRegistrationData, PaymentData, RegistrationRequest } from '../
 import ServerStatus from '../components/ServerStatus';
 import axios from 'axios';
 import lgArenaLogo from '../assets/LG-arena-logo.jpg';
+import fsLogo from '../assets/Flying-skater-logo.jpg';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ const Register: React.FC = () => {
     email: '',
     parent_name: '',
     parent_phone: '',
-    grade: ''
+    grade: '',
+    category: ''
   });
 
   const [paymentData] = useState<PaymentData>({
@@ -85,6 +87,11 @@ const Register: React.FC = () => {
       newErrors.grade = 'Please select a valid grade';
     }
 
+    // Category validation: must be selected
+    if (!formData.category) {
+      newErrors.category = 'Please select a skill level';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -149,16 +156,13 @@ const Register: React.FC = () => {
             <div className="flex items-center justify-center space-x-2 mb-6">
              <span className="text-gray-700 font-semibold tracking-wide text-sm uppercase">ORGANIZED BY</span>
              <div className="flex items-center space-x-6">
-                               <div className="text-center">
+                <div className="text-center">
                   <img src={lgArenaLogo} alt="LG 87 Play Arena" className="w-34 h-34" />  
                 </div>
                
-               <div className="text-center">
-                 <div className="w-20 h-20 bg-gradient-to-br from-red-500 via-blue-500 to-white rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-4 border-white">
-                   <span className="text-lg font-black text-gray-800 tracking-wider">FS</span>
-                 </div>
-                 <span className="text-sm font-semibold text-gray-700 tracking-wide">FLYING SKATERS ACADEMY</span>
-               </div>
+                               <div className="text-center">
+                  <img src={fsLogo} alt="Flying Skaters Academy" className="w-24 h-24" />  
+                </div>
              </div>
            </div>
           </div>
@@ -329,6 +333,29 @@ const Register: React.FC = () => {
               </select>
               {errors.grade && (
                 <p className="mt-1 text-xs text-red-600">{errors.grade}</p>
+              )}
+            </div>
+
+            {/* Category Selection */}
+            <div className="max-w-xs sm:max-w-sm mx-auto">
+              <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                Skill Level *
+              </label>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.category ? 'border-red-300 ring-red-200' : 'border-gray-300'
+                }`}
+              >
+                <option value="">Select Skill Level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+              </select>
+              {errors.category && (
+                <p className="mt-1 text-xs text-red-600">{errors.category}</p>
               )}
             </div>
 
