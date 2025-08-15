@@ -25,12 +25,6 @@ const Navigation: React.FC = () => {
             Registration
           </Link>
           <Link
-            to="/api-test"
-            className={`px-3 py-4 text-sm font-medium rounded-md transition-colors ${getActiveClasses('/api-test')}`}
-          >
-            API Test
-          </Link>
-          <Link
             to="/success"
             className={`px-3 py-4 text-sm font-medium rounded-md transition-colors ${getActiveClasses('/success')}`}
           >

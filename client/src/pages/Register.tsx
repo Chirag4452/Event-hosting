@@ -143,120 +143,123 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-6 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md mx-auto">
         {/* Header Section */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Event Registration
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-gray-600 text-sm">
             Join us for an amazing event experience
           </p>
         </div>
 
         {/* Server Status Indicator */}
-        <div className="text-center mb-4">
-          <ServerStatus showDetails={true} />
+        <div className="text-center mb-6">
+          <ServerStatus />
         </div>
 
         {/* Main Registration Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+        <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 sm:p-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-6 text-center">
             Student Information
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name and Email Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Student Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                    errors.name ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter student's full name"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="student@example.com"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                )}
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name */}
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Student Name *
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.name ? 'border-red-300 ring-red-200' : 'border-gray-300'
+                }`}
+                placeholder="Enter student's full name"
+              />
+              {errors.name && (
+                <p className="mt-1 text-xs text-red-600">{errors.name}</p>
+              )}
             </div>
 
-            {/* Parent Information Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="parent_name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Parent/Guardian Name *
-                </label>
-                <input
-                  type="text"
-                  id="parent_name"
-                  name="parent_name"
-                  value={formData.parent_name}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                    errors.parent_name ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter parent's full name"
-                />
-                {errors.parent_name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.parent_name}</p>
-                )}
-              </div>
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.email ? 'border-red-300 ring-red-200' : 'border-gray-300'
+                }`}
+                placeholder="student@example.com"
+              />
+              {errors.email && (
+                <p className="mt-1 text-xs text-red-600">{errors.email}</p>
+              )}
+            </div>
 
-              <div>
-                <label htmlFor="parent_phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Parent Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  id="parent_phone"
-                  name="parent_phone"
-                  value={formData.parent_phone}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                    errors.parent_phone ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="10-digit phone number"
-                  maxLength={10}
-                />
-                {errors.parent_phone && (
-                  <p className="mt-1 text-sm text-red-600">{errors.parent_phone}</p>
-                )}
-              </div>
+            {/* Parent Name */}
+            <div>
+              <label htmlFor="parent_name" className="block text-sm font-medium text-gray-700 mb-1">
+                Parent/Guardian Name *
+              </label>
+              <input
+                type="text"
+                id="parent_name"
+                name="parent_name"
+                value={formData.parent_name}
+                onChange={handleInputChange}
+                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.parent_name ? 'border-red-300 ring-red-200' : 'border-gray-300'
+                }`}
+                placeholder="Enter parent's full name"
+              />
+              {errors.parent_name && (
+                <p className="mt-1 text-xs text-red-600">{errors.parent_name}</p>
+              )}
+            </div>
+
+            {/* Parent Phone */}
+            <div>
+              <label htmlFor="parent_phone" className="block text-sm font-medium text-gray-700 mb-1">
+                Parent Phone Number *
+              </label>
+              <input
+                type="tel"
+                id="parent_phone"
+                name="parent_phone"
+                value={formData.parent_phone}
+                onChange={handleInputChange}
+                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.parent_phone ? 'border-red-300 ring-red-200' : 'border-gray-300'
+                }`}
+                placeholder="10-digit phone number"
+                maxLength={10}
+              />
+              {errors.parent_phone && (
+                <p className="mt-1 text-xs text-red-600">{errors.parent_phone}</p>
+              )}
             </div>
 
             {/* Grade Selection */}
             <div>
-              <label htmlFor="grade" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="grade" className="block text-sm font-medium text-gray-700 mb-1">
                 Grade/Class *
               </label>
               <select
@@ -264,8 +267,8 @@ const Register: React.FC = () => {
                 name="grade"
                 value={formData.grade}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.grade ? 'border-red-500' : 'border-gray-300'
+                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.grade ? 'border-red-300 ring-red-200' : 'border-gray-300'
                 }`}
               >
                 <option value="">Select Grade</option>
@@ -276,19 +279,19 @@ const Register: React.FC = () => {
                 ))}
               </select>
               {errors.grade && (
-                <p className="mt-1 text-sm text-red-600">{errors.grade}</p>
+                <p className="mt-1 text-xs text-red-600">{errors.grade}</p>
               )}
             </div>
 
             {/* Submit Button */}
-            <div className="pt-6">
+            <div className="pt-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-200 ${
+                className={`w-full py-3 px-4 rounded-lg font-medium text-white text-sm transition-all duration-200 ${
                   isSubmitting
                     ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-0.5'
+                    : 'bg-blue-600 hover:bg-blue-700 hover:shadow-md active:transform active:scale-95'
                 }`}
               >
                 {isSubmitting ? 'Processing...' : 'Complete Registration'}
@@ -297,15 +300,22 @@ const Register: React.FC = () => {
 
             {/* Submission Message */}
             {submitMessage && (
-              <div className={`mt-4 p-4 rounded-lg text-center ${
+              <div className={`mt-4 p-3 rounded-lg text-center text-sm ${
                 submitMessage.includes('successful') 
-                  ? 'bg-green-100 text-green-800 border border-green-200' 
-                  : 'bg-red-100 text-red-800 border border-red-200'
+                  ? 'bg-green-50 text-green-800 border border-green-200' 
+                  : 'bg-red-50 text-red-800 border border-red-200'
               }`}>
                 {submitMessage}
               </div>
             )}
           </form>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-6">
+          <p className="text-xs text-gray-500">
+            By registering, you agree to our terms and conditions
+          </p>
         </div>
       </div>
     </div>

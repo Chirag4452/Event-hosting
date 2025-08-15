@@ -4,16 +4,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import connectDB from './config/databses.js';
 import config from './config/config.js';
-import dotenv from 'dotenv';
 import registrationRoutes from './routes/registrationRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { generalRateLimit } from './middleware/rateLimiter.js';
-import { registrationSchema } from './schemas/userSchemas.js';
-import User from './models/User.js';
-import mongoose from 'mongoose';
-
-// Load environment variables
-dotenv.config();
 
 // Create Express app instance
 const app = express();
@@ -37,7 +30,7 @@ app.use(generalRateLimit);
 // Use routes
 app.use('/api', registrationRoutes);
 
-// Basic test route
+// Basic health check route
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
@@ -48,127 +41,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Test registration endpoint (for debugging)
-app.post('/api/test-register', (req, res) => {
-  console.log('Test registration request body:', req.body);
-  res.status(200).json({
-    success: true,
-    message: 'Test endpoint working',
-    receivedData: req.body
-  });
-});
-
-// Test schema validation endpoint
-app.post('/api/test-schema', (req, res) => {
-  try {
-    console.log('Testing schema validation with:', req.body);
-    const validated = registrationSchema.parse(req.body);
-    res.status(200).json({
-      success: true,
-      message: 'Schema validation passed',
-      validatedData: validated
-    });
-  } catch (error) {
-    console.error('Schema validation failed:', error);
-    res.status(400).json({
-      success: false,
-      message: 'Schema validation failed',
-      error: error.message,
-      details: error.errors || 'No detailed errors'
-    });
-  }
-});
-
-// Test User model endpoint
-app.post('/api/test-model', async (req, res) => {
-  try {
-    console.log('Testing User model with:', req.body);
-    
-    // Test creating a user document
-    const testUser = new User(req.body.user || req.body);
-    console.log('User document created:', testUser);
-    
-    // Test validation without saving
-    const validationResult = testUser.validateSync();
-    if (validationResult) {
-      console.log('Validation errors:', validationResult);
-      return res.status(400).json({
-        success: false,
-        message: 'Model validation failed',
-        errors: validationResult.errors
-      });
-    }
-    
-    res.status(200).json({
-      success: true,
-      message: 'User model test passed',
-      userDocument: {
-        name: testUser.name,
-        email: testUser.email,
-        parent_name: testUser.parent_name,
-        parent_phone: testUser.parent_phone,
-        grade: testUser.grade
-      }
-    });
-  } catch (error) {
-    console.error('User model test failed:', error);
-    res.status(500).json({
-      success: false,
-      message: 'User model test failed',
-      error: error.message
-    });
-  }
-});
-
-// Test MongoDB connection endpoint
-app.get('/api/test-db', async (req, res) => {
-  try {
-    console.log('🔍 Testing MongoDB connection...');
-    
-    // Check connection status
-    const connectionState = mongoose.connection.readyState;
-    const states = {
-      0: 'disconnected',
-      1: 'connected',
-      2: 'connecting',
-      3: 'disconnecting'
-    };
-    
-    console.log(`📊 Connection state: ${states[connectionState]} (${connectionState})`);
-    
-    if (connectionState === 1) {
-      // Test database operations
-      const testCollection = mongoose.connection.db.collection('test');
-      await testCollection.insertOne({ test: true, timestamp: new Date() });
-      await testCollection.deleteOne({ test: true });
-      
-      res.status(200).json({
-        success: true,
-        message: 'MongoDB connection test passed',
-        connectionState: states[connectionState],
-        database: mongoose.connection.db.databaseName,
-        host: mongoose.connection.host
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: 'MongoDB not connected',
-        connectionState: states[connectionState],
-        error: 'NOT_CONNECTED'
-      });
-    }
-  } catch (error) {
-    console.error('❌ MongoDB connection test failed:', error);
-    res.status(500).json({
-      success: false,
-      message: 'MongoDB connection test failed',
-      error: error.message,
-      connectionState: mongoose.connection.readyState
-    });
-  }
-});
-
-// Root route for basic testing
+// Root route
 app.get('/', (req, res) => {
   res.status(200).json({
     message: 'Event Hosting Server',
@@ -177,11 +50,7 @@ app.get('/', (req, res) => {
     endpoints: {
       health: '/api/health',
       register: '/api/register',
-      registrations: '/api/registrations',
-      testRegister: '/api/test-register',
-      testSchema: '/api/test-schema',
-      testModel: '/api/test-model',
-      testDb: '/api/test-db'
+      registrations: '/api/registrations'
     }
   });
 });
