@@ -4,8 +4,12 @@ import { registerUser } from '../services/api';
 import type { UserRegistrationData, PaymentData, RegistrationRequest } from '../services/api';
 import ServerStatus from '../components/ServerStatus';
 import axios from 'axios';
+
 import lgArenaLogo from '../assets/LG-arena-logo.jpg';
 import fsLogo from '../assets/Flying-skater-logo.jpg';
+import bg from '../assets/beginner.jpg';
+import inter from '../assets/intermediate.jpg';
+
 import { termsAndConditions } from '../data/termsAndConditions';
 
 const Register: React.FC = () => {
@@ -354,19 +358,70 @@ const Register: React.FC = () => {
               <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
                 Skill Level *
               </label>
-              <select
-                id="category"
+              
+              {/* Skill Level Images - Clickable Selection */}
+              <div className="mb-3">
+                <div className="flex justify-center space-x-4">
+                  <div 
+                    className={`text-center cursor-pointer transition-all duration-200 ${
+                      formData.category === 'Beginner' 
+                        ? 'scale-105' 
+                        : 'hover:scale-105'
+                    }`}
+                    onClick={() => setFormData(prev => ({ ...prev, category: 'Beginner' }))}
+                  >
+                    <img 
+                      src={bg} 
+                      alt="Beginner Level" 
+                      className={`w-32 h-20 object-cover rounded-lg border-2 transition-all duration-200 ${
+                        formData.category === 'Beginner' 
+                          ? 'border-blue-500 shadow-lg' 
+                          : 'border-gray-200 hover:border-blue-300'
+                      }`}
+                    />
+                    <p className={`text-xs mt-1 font-medium ${
+                      formData.category === 'Beginner' 
+                        ? 'text-blue-600' 
+                        : 'text-gray-600'
+                    }`}>
+                      Beginner
+                    </p>
+                  </div>
+                  <div 
+                    className={`text-center cursor-pointer transition-all duration-200 ${
+                      formData.category === 'Intermediate' 
+                        ? 'scale-105' 
+                        : 'hover:scale-105'
+                    }`}
+                    onClick={() => setFormData(prev => ({ ...prev, category: 'Intermediate' }))}
+                  >
+                    <img 
+                      src={inter} 
+                      alt="Intermediate Level" 
+                      className={`w-42 h-20 object-cover rounded-lg border-2 transition-all duration-200 ${
+                        formData.category === 'Intermediate' 
+                          ? 'border-blue-500 shadow-lg' 
+                          : 'border-gray-200 hover:border-blue-300'
+                      }`}
+                    />
+                    <p className={`text-xs mt-1 font-medium ${
+                      formData.category === 'Intermediate' 
+                        ? 'text-blue-600' 
+                        : 'text-gray-600'
+                    }`}>
+                      Intermediate
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Hidden input for form validation */}
+              <input
+                type="hidden"
                 name="category"
                 value={formData.category}
-                onChange={handleInputChange}
-                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.category ? 'border-red-300 ring-red-200' : 'border-gray-300'
-                }`}
-              >
-                <option value="">Select Skill Level</option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-              </select>
+              />
+              
               {errors.category && (
                 <p className="mt-1 text-xs text-red-600">{errors.category}</p>
               )}
