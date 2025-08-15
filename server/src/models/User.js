@@ -27,6 +27,44 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['Beginner', 'Intermediate'],
     },
+    // Payment information
+    payment_details: {
+        payment_id: {
+            type: String,
+            required: false, // Will be set after successful payment
+        },
+        order_id: {
+            type: String,
+            required: false,
+        },
+        amount_paid: {
+            type: Number,
+            required: false, // Amount in paise
+        },
+        currency: {
+            type: String,
+            default: 'INR',
+        },
+        payment_status: {
+            type: String,
+            enum: ['pending', 'completed', 'failed'],
+            default: 'pending',
+        },
+        payment_method: {
+            type: String,
+            required: false, // card, netbanking, wallet, etc.
+        },
+        verified_at: {
+            type: Date,
+            required: false,
+        },
+    },
+    // Registration status
+    registration_status: {
+        type: String,
+        enum: ['initiated', 'payment_pending', 'confirmed', 'cancelled'],
+        default: 'initiated',
+    },
     createdAt: {
         type: Date,
         default: Date.now,

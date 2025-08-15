@@ -17,6 +17,7 @@ import helmet from 'helmet';
 import connectDB from './config/databses.js';
 import config from './config/config.js';
 import registrationRoutes from './routes/registrationRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { generalRateLimit } from './middleware/rateLimiter.js';
 
@@ -41,6 +42,7 @@ app.use(generalRateLimit);
 
 // Use routes
 app.use('/api', registrationRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Basic health check route
 app.get('/api/health', (req, res) => {

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
-import type { UserRegistrationData, PaymentData, RegistrationRequest } from '../services/api';
+import type { 
+  UserRegistrationData, 
+  RegistrationRequest,
+  PaymentVerificationResponse 
+} from '../services/api';
+import { initiatePayment, getRegistrationFeeDisplay } from '../utils/payment';
 import ServerStatus from '../components/ServerStatus';
 import axios from 'axios';
 
@@ -28,11 +33,8 @@ const Register: React.FC = () => {
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
   const [showFullTerms, setShowFullTerms] = useState<boolean>(false);
 
-  const [paymentData] = useState<PaymentData>({
-    amount: 0,
-    currency: 'INR',
-    order_id: ''
-  });
+  
+  const [isProcessingPayment, setIsProcessingPayment] = useState<boolean>(false);
 
   const [errors, setErrors] = useState<Partial<UserRegistrationData>>({});
   const [termsError, setTermsError] = useState<string>('');
@@ -113,7 +115,65 @@ const Register: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission using axios
+  // Handle payment success and complete registration
+  const handlePaymentSuccess = async (paymentVerificationData: PaymentVerificationResponse): Promise<void> => {
+    try {
+      console.log('💳 Payment successful, completing registration...');
+      
+      // Prepare registration data with payment information
+      const registrationData: RegistrationRequest = {
+        user: formData,
+        payment: {
+          payment_id: paymentVerificationData.payment_id,
+          order_id: paymentVerificationData.order_id,
+          amount_paid: paymentVerificationData.amount_paid,
+          currency: paymentVerificationData.currency,
+          payment_status: 'completed',
+          payment_method: paymentVerificationData.method,
+          verified_at: paymentVerificationData.verified_at,
+        }
+      };
+
+      // Register user with payment information
+      const response = await registerUser(registrationData);
+
+      if (response.data.success) {
+        console.log('✅ Registration completed successfully');
+        setSubmitMessage('Registration and payment completed successfully!');
+        
+        // Navigate to success page after a short delay
+        setTimeout(() => {
+          navigate('/success');
+        }, 1500);
+      } else {
+        setSubmitMessage(response.data.message || 'Registration failed after payment. Please contact support.');
+      }
+    } catch (error: unknown) {
+      console.error('❌ Registration error after payment:', error);
+      let errorMessage = 'Registration failed after payment. Please contact support with your payment ID.';
+      
+      if (axios.isAxiosError(error)) {
+        errorMessage = error.response?.data?.message || errorMessage;
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
+      setSubmitMessage(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+      setIsProcessingPayment(false);
+    }
+  };
+
+  // Handle payment error
+  const handlePaymentError = (error: string): void => {
+    console.error('❌ Payment error:', error);
+    setSubmitMessage(`Payment failed: ${error}`);
+    setIsSubmitting(false);
+    setIsProcessingPayment(false);
+  };
+
+  // Handle form submission - initiate payment flow
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     
@@ -122,39 +182,25 @@ const Register: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    setSubmitMessage('');
+    setIsProcessingPayment(true);
+    setSubmitMessage('Initializing payment...');
 
     try {
-      // Prepare registration data
-      const registrationData: RegistrationRequest = {
-        user: formData,
-        payment: paymentData
-      };
-
-      // Use axios service to register user
-      const response = await registerUser(registrationData);
-
-      if (response.data.success) {
-        // Navigate to success page after successful registration
-        navigate('/success');
-      } else {
-        setSubmitMessage(response.data.message || 'Registration failed. Please try again.');
-      }
+      // Initiate payment process
+      await initiatePayment(
+        formData,
+        handlePaymentSuccess,
+        handlePaymentError
+      );
     } catch (error: unknown) {
-      // Handle different types of errors
-      if (axios.isAxiosError(error)) {
-        // Server responded with error status
-        const errorMessage = error.response?.data?.message || 'Server error occurred';
-        setSubmitMessage(`Registration failed: ${errorMessage}`);
-      } else if (error instanceof Error) {
-        // Something else happened
-        setSubmitMessage(`An error occurred: ${error.message}`);
-      } else {
-        setSubmitMessage('An unexpected error occurred. Please try again.');
+      console.error('❌ Payment initiation error:', error);
+      let errorMessage = 'Failed to initiate payment. Please try again.';
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
       }
-      console.error('Registration error:', error);
-    } finally {
-      setIsSubmitting(false);
+      
+      handlePaymentError(errorMessage);
     }
   };
 
@@ -386,6 +432,13 @@ const Register: React.FC = () => {
                     }`}>
                       Beginner
                     </p>
+                    <p className={`text-xs font-bold ${
+                      formData.category === 'Beginner' 
+                        ? 'text-green-600' 
+                        : 'text-gray-500'
+                    }`}>
+                      ₹500
+                    </p>
                   </div>
                   <div 
                     className={`text-center cursor-pointer transition-all duration-200 ${
@@ -411,9 +464,31 @@ const Register: React.FC = () => {
                     }`}>
                       Intermediate
                     </p>
+                    <p className={`text-xs font-bold ${
+                      formData.category === 'Intermediate' 
+                        ? 'text-green-600' 
+                        : 'text-gray-500'
+                    }`}>
+                      ₹750
+                    </p>
                   </div>
                 </div>
               </div>
+              
+              {/* Registration Fee Display */}
+              {formData.category && (
+                <div className="mb-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-gray-700">Registration Fee:</span>
+                    <span className="text-lg font-bold text-green-600">
+                      {getRegistrationFeeDisplay(formData.category)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Payment will be processed securely via Razorpay
+                  </p>
+                </div>
+              )}
               
               {/* Hidden input for form validation */}
               <input
@@ -490,22 +565,37 @@ const Register: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full py-2 px-4 rounded-md font-medium text-white text-xs transition-all duration-200 ${
+                className={`w-full py-3 px-4 rounded-md font-medium text-white text-sm transition-all duration-200 ${
                   isSubmitting
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700 hover:shadow-md active:transform active:scale-95'
                 }`}
               >
-                {isSubmitting ? 'Processing...' : 'Complete Registration'}
+                {isProcessingPayment 
+                  ? 'Processing Payment...' 
+                  : isSubmitting 
+                    ? 'Completing Registration...' 
+                    : `Pay ${formData.category ? getRegistrationFeeDisplay(formData.category) : '₹500'} & Register`
+                }
               </button>
+              
+              {/* Payment Security Info */}
+              <div className="mt-3 flex items-center justify-center space-x-2 text-xs text-gray-500">
+                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                </svg>
+                <span>Secure payment via Razorpay</span>
+              </div>
             </div>
 
             {/* Submission Message */}
             {submitMessage && (
               <div className={`mt-4 p-3 rounded-lg text-center text-sm ${
-                submitMessage.includes('successful') 
+                submitMessage.includes('successful') || submitMessage.includes('completed')
                   ? 'bg-green-50 text-green-800 border border-green-200' 
-                  : 'bg-red-50 text-red-800 border border-red-200'
+                  : submitMessage.includes('Processing') || submitMessage.includes('Initializing')
+                    ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                    : 'bg-red-50 text-red-800 border border-red-200'
               }`}>
                 {submitMessage}
               </div>
@@ -528,5 +618,6 @@ const Register: React.FC = () => {
     </div>
   );
 };
+
 
 export default Register;
