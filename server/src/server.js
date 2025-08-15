@@ -1,3 +1,15 @@
+// Load environment variables from root directory .env file
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Get the directory path of the current file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load .env file from the root directory (two levels up from server/src)
+dotenv.config({ path: join(__dirname, '../../.env') });
+
 // Import required modules
 import express from 'express';
 import cors from 'cors';
