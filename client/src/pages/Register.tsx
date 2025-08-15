@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
 import type { UserRegistrationData, PaymentData, RegistrationRequest } from '../services/api';
 import ServerStatus from '../components/ServerStatus';
 import axios from 'axios';
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
+  
   // Form state management
   const [formData, setFormData] = useState<UserRegistrationData>({
     name: '',
@@ -14,7 +17,7 @@ const Register: React.FC = () => {
     grade: ''
   });
 
-  const [paymentData, setPaymentData] = useState<PaymentData>({
+  const [paymentData] = useState<PaymentData>({
     amount: 0,
     currency: 'INR',
     order_id: ''
@@ -107,20 +110,8 @@ const Register: React.FC = () => {
       const response = await registerUser(registrationData);
 
       if (response.data.success) {
-        setSubmitMessage('Registration successful! You will receive a confirmation email shortly.');
-        // Reset form after successful submission
-        setFormData({
-          name: '',
-          email: '',
-          parent_name: '',
-          parent_phone: '',
-          grade: ''
-        });
-        setPaymentData({
-          amount: 0,
-          currency: 'INR',
-          order_id: ''
-        });
+        // Navigate to success page after successful registration
+        navigate('/success');
       } else {
         setSubmitMessage(response.data.message || 'Registration failed. Please try again.');
       }
