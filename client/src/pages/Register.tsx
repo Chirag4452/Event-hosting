@@ -7,7 +7,6 @@ import type {
   PaymentVerificationResponse 
 } from '../services/api';
 import { initiatePayment, getRegistrationFeeDisplay } from '../utils/payment';
-import ServerStatus from '../components/ServerStatus';
 import axios from 'axios';
 
 import lgArenaLogo from '../assets/LG-arena-logo.jpg';
@@ -589,21 +588,10 @@ const Register: React.FC = () => {
           </form>
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-6">
-          <p className="text-xs text-gray-500">
-            By registering, you agree to our terms and conditions
-          </p>
-        </div>
-
-        {/* Server Status Indicator */}
-        <div className="text-center mt-6">
-          <ServerStatus />
-        </div>
+        {/* Remove both Footer and Server Status sections */}
       </div>
     </div>
   );
 };
-
 
 export default Register;
