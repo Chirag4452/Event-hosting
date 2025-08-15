@@ -432,13 +432,6 @@ const Register: React.FC = () => {
                     }`}>
                       Beginner
                     </p>
-                    <p className={`text-xs font-bold ${
-                      formData.category === 'Beginner' 
-                        ? 'text-green-600' 
-                        : 'text-gray-500'
-                    }`}>
-                      ₹500
-                    </p>
                   </div>
                   <div 
                     className={`text-center cursor-pointer transition-all duration-200 ${
@@ -463,13 +456,6 @@ const Register: React.FC = () => {
                         : 'text-gray-600'
                     }`}>
                       Intermediate
-                    </p>
-                    <p className={`text-xs font-bold ${
-                      formData.category === 'Intermediate' 
-                        ? 'text-green-600' 
-                        : 'text-gray-500'
-                    }`}>
-                      ₹750
                     </p>
                   </div>
                 </div>
