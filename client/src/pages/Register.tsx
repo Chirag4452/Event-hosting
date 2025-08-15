@@ -29,7 +29,7 @@ const Register: React.FC = () => {
 
   // Grade options for the dropdown
   const gradeOptions = [
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'
+    'Mont','Pre-KG','U-KG','1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
   ];
 
   // Handle input changes for user registration form
@@ -135,26 +135,82 @@ const Register: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-6 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
+      <div className="max-w-4xl mx-auto">
+        {/* Event Information Section */}
+        <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 sm:p-8 mb-8">
+          <div className="text-center mb-6">
+            <h1 className="text-4xl font-black text-blue-900 mb-2 tracking-wider" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
+              LG 87 1ST SKATING
+            </h1>
+            <h2 className="text-5xl font-black text-red-600 mb-4 tracking-widest" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
+              CHAMPIONSHIP
+            </h2>
+                      <div className="flex items-center justify-center space-x-2 mb-6">
+            <span className="text-gray-700 font-semibold tracking-wide text-sm uppercase">ORGANIZED BY</span>
+            <div className="flex items-center space-x-6">
+              <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-200">
+                <span className="font-bold tracking-wide">LG 87 PLAY ARENA</span>
+              </div>
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-red-500 via-blue-500 to-white rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-4 border-white">
+                  <span className="text-lg font-black text-gray-800 tracking-wider">FS</span>
+                </div>
+                <span className="text-sm font-semibold text-gray-700 tracking-wide">FLYING SKATERS ACADEMY</span>
+              </div>
+            </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Event Registration
-          </h1>
-          <p className="text-gray-600 text-sm">
-            Join us for an amazing event experience
-          </p>
+          </div>
+
+          {/* Challenge Banner */}
+          <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-4 px-8 rounded-2xl mb-8 text-center shadow-xl transform -skew-x-12 border border-blue-700">
+            <span className="text-2xl font-black tracking-widest transform skew-x-12 block" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
+              CHALLENGE YOURSELF
+            </span>
+          </div>
+
+          {/* Event Description */}
+          <div className="text-center mb-8">
+            <p className="text-red-600 text-xl leading-relaxed max-w-4xl mx-auto font-medium tracking-wide">
+              Join us for an electrifying skating race and show off your speed! From first-timers to seasoned skaters, everyone is welcome on the track!
+            </p>
+          </div>
+
+          {/* Event Details */}
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-sm">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-gray-900 font-bold text-lg tracking-wide">SUNDAY 7 SEPTEMBER, 2025</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-sm">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-gray-900 font-bold text-lg tracking-wide">LG 87 PLAY ARENA</p>
+                <p className="text-red-600 font-semibold text-base">INDOOR SKATING RINK</p>
+                <p className="text-gray-700 font-medium">Tippasandara</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Register Now Banner */}
+          <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-4 px-8 rounded-2xl text-center shadow-xl transform -skew-x-12 border border-blue-700">
+            <span className="text-2xl font-black tracking-widest transform skew-x-12 block" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
+              REGISTER NOW
+            </span>
+          </div>
         </div>
 
-        {/* Server Status Indicator */}
-        <div className="text-center mb-6">
-          <ServerStatus />
-        </div>
+
 
         {/* Main Registration Form */}
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 sm:p-8">
@@ -164,7 +220,7 @@ const Register: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
-            <div>
+            <div className="max-w-xs sm:max-w-sm mx-auto">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Student Name *
               </label>
@@ -174,7 +230,7 @@ const Register: React.FC = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
                   errors.name ? 'border-red-300 ring-red-200' : 'border-gray-300'
                 }`}
                 placeholder="Enter student's full name"
@@ -185,7 +241,7 @@ const Register: React.FC = () => {
             </div>
 
             {/* Email */}
-            <div>
+            <div className="max-w-xs sm:max-w-sm mx-auto">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email Address *
               </label>
@@ -195,7 +251,7 @@ const Register: React.FC = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
                   errors.email ? 'border-red-300 ring-red-200' : 'border-gray-300'
                 }`}
                 placeholder="student@example.com"
@@ -206,7 +262,7 @@ const Register: React.FC = () => {
             </div>
 
             {/* Parent Name */}
-            <div>
+            <div className="max-w-xs sm:max-w-sm mx-auto">
               <label htmlFor="parent_name" className="block text-sm font-medium text-gray-700 mb-1">
                 Parent/Guardian Name *
               </label>
@@ -216,7 +272,7 @@ const Register: React.FC = () => {
                 name="parent_name"
                 value={formData.parent_name}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
                   errors.parent_name ? 'border-red-300 ring-red-200' : 'border-gray-300'
                 }`}
                 placeholder="Enter parent's full name"
@@ -227,7 +283,7 @@ const Register: React.FC = () => {
             </div>
 
             {/* Parent Phone */}
-            <div>
+            <div className="max-w-xs sm:max-w-sm mx-auto">
               <label htmlFor="parent_phone" className="block text-sm font-medium text-gray-700 mb-1">
                 Parent Phone Number *
               </label>
@@ -237,7 +293,7 @@ const Register: React.FC = () => {
                 name="parent_phone"
                 value={formData.parent_phone}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
                   errors.parent_phone ? 'border-red-300 ring-red-200' : 'border-gray-300'
                 }`}
                 placeholder="10-digit phone number"
@@ -249,7 +305,7 @@ const Register: React.FC = () => {
             </div>
 
             {/* Grade Selection */}
-            <div>
+            <div className="max-w-xs sm:max-w-sm mx-auto">
               <label htmlFor="grade" className="block text-sm font-medium text-gray-700 mb-1">
                 Grade/Class *
               </label>
@@ -258,7 +314,7 @@ const Register: React.FC = () => {
                 name="grade"
                 value={formData.grade}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
                   errors.grade ? 'border-red-300 ring-red-200' : 'border-gray-300'
                 }`}
               >
@@ -275,11 +331,11 @@ const Register: React.FC = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="pt-4">
+            <div className="pt-4 max-w-xs sm:max-w-sm mx-auto">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full py-3 px-4 rounded-lg font-medium text-white text-sm transition-all duration-200 ${
+                className={`w-full py-2 px-4 rounded-md font-medium text-white text-xs transition-all duration-200 ${
                   isSubmitting
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700 hover:shadow-md active:transform active:scale-95'
@@ -307,6 +363,11 @@ const Register: React.FC = () => {
           <p className="text-xs text-gray-500">
             By registering, you agree to our terms and conditions
           </p>
+        </div>
+
+        {/* Server Status Indicator */}
+        <div className="text-center mt-6">
+          <ServerStatus />
         </div>
       </div>
     </div>
