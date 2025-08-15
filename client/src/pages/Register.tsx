@@ -163,11 +163,11 @@ const Register: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         {/* Event Information Section */}
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 sm:p-8 mb-8">
-          <div className="text-center mb-6">
-            <h1 className="text-4xl font-black text-blue-900 mb-2 tracking-wider" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
+          <div className="text-center mb-4 sm:mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-blue-900 mb-1 sm:mb-2 tracking-wider" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
               LG 87 1ST SKATING
             </h1>
-            <h2 className="text-5xl font-black text-red-600 mb-4 tracking-widest" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-red-600 mb-2 sm:mb-4 tracking-widest" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
               CHAMPIONSHIP
             </h2>
             <div className="flex items-center justify-center space-x-2 mb-6">
@@ -192,35 +192,35 @@ const Register: React.FC = () => {
           </div>
 
           {/* Event Description */}
-          <div className="text-center mb-8">
-            <p className="text-red-600 text-xl leading-relaxed max-w-4xl mx-auto font-medium tracking-wide">
+          <div className="text-center mb-6 sm:mb-8">
+            <p className="text-red-600 text-base sm:text-lg md:text-xl leading-tight sm:leading-relaxed max-w-4xl mx-auto font-medium tracking-wide" style={{ fontFamily: 'Russo One, sans-serif' }}>
               Join us for an electrifying skating race and show off your speed! From first-timers to seasoned skaters, everyone is welcome on the track!
             </p>
           </div>
 
           {/* Event Details */}
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-sm">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
+            <div className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg sm:rounded-xl border border-blue-200 shadow-sm">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
               <div>
-                <p className="text-gray-900 font-bold text-lg tracking-wide">SUNDAY 7 SEPTEMBER, 2025</p>
+                <p className="text-gray-900 font-bold text-base sm:text-lg tracking-wide">SUNDAY 7 SEPTEMBER, 2025</p>
               </div>
             </div>
-            <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-sm">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg sm:rounded-xl border border-blue-200 shadow-sm">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
               <div>
-                <p className="text-gray-900 font-bold text-lg tracking-wide">LG 87 PLAY ARENA</p>
-                <p className="text-red-600 font-semibold text-base">INDOOR SKATING RINK</p>
-                <p className="text-gray-700 font-medium">Tippasandara</p>
+                <p className="text-gray-900 font-bold text-base sm:text-lg tracking-wide">LG 87 PLAY ARENA</p>
+                <p className="text-red-600 font-semibold text-sm sm:text-base">INDOOR SKATING RINK</p>
+                <p className="text-gray-700 font-medium text-sm sm:text-base">Tippasandara</p>
               </div>
             </div>
           </div>
@@ -228,7 +228,7 @@ const Register: React.FC = () => {
           {/* Register Now Banner */}
           <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-4 px-8 rounded-2xl text-center shadow-xl transform -skew-x-12 border border-blue-700">
             <span className="text-2xl font-black tracking-widest transform skew-x-12 block" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
-              REGISTER NOW
+              REGISTER BELOW
             </span>
           </div>
         </div>
@@ -373,7 +373,7 @@ const Register: React.FC = () => {
                     <img 
                       src={bg} 
                       alt="Beginner Level" 
-                      className={`w-32 h-20 object-cover rounded-lg border-2 transition-all duration-200 ${
+                      className={`w-46 h-20 object-cover rounded-lg border-2 transition-all duration-200 ${
                         formData.category === 'Beginner' 
                           ? 'border-blue-500 shadow-lg' 
                           : 'border-gray-200 hover:border-blue-300'
