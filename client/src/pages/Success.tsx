@@ -31,10 +31,8 @@ const Success: React.FC = () => {
         <div className="text-left bg-gray-50 rounded-lg p-4 mb-6">
           <h3 className="font-semibold text-gray-800 mb-2">What's Next?</h3>
           <ul className="text-sm text-gray-600 space-y-1">
-            <li>• You will receive a confirmation email shortly</li>
             <li>• Please arrive 30 minutes before the event</li>
             <li>• Bring safety gear (helmets, knee pads)</li>
-            <li>• Contact us if you have any questions</li>
           </ul>
         </div>
         

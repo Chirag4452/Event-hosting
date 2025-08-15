@@ -1,5 +1,5 @@
 // Import required modules
-import { razorpay, getRegistrationFee, paiseToRupees, PAYMENT_CONFIG } from '../config/payment.js';
+import { getRazorpay, getRegistrationFee, paiseToRupees, PAYMENT_CONFIG } from '../config/payment.js';
 import crypto from 'crypto';
 import config from '../config/config.js';
 
@@ -40,6 +40,8 @@ export const createPaymentOrder = async (req, res) => {
 
     console.log('🚀 Creating Razorpay order:', orderOptions);
 
+    // Get Razorpay instance when needed
+    const razorpay = getRazorpay();
     // Create order with Razorpay
     const order = await razorpay.orders.create(orderOptions);
 
@@ -131,6 +133,8 @@ export const verifyPayment = async (req, res) => {
     // Fetch payment details from Razorpay for additional verification
     let paymentDetails;
     try {
+      // Get Razorpay instance when needed
+      const razorpay = getRazorpay();
       paymentDetails = await razorpay.payments.fetch(razorpay_payment_id);
       console.log('💳 Payment details fetched:', paymentDetails);
     } catch (fetchError) {

@@ -2,27 +2,39 @@
 import Razorpay from 'razorpay';
 import config from './config.js';
 
+// Don't create instance immediately - create it lazily
+let razorpayInstance = null;
+
 /**
- * Initialize Razorpay instance with API keys
+ * Initialize Razorpay instance with API keys (lazy initialization)
  * @returns {Razorpay} Razorpay instance
  */
 const createRazorpayInstance = () => {
+  if (razorpayInstance) {
+    return razorpayInstance; // Return existing instance
+  }
+
   try {
-    const razorpay = new Razorpay({
+    razorpayInstance = new Razorpay({
       key_id: config.razorpay.keyId,
       key_secret: config.razorpay.keySecret,
     });
     
     console.log('✅ Razorpay instance created successfully');
-    return razorpay;
+    console.log(`🔑 Using key_id: ${config.razorpay.keyId ? config.razorpay.keyId.substring(0, 8) + '...' : 'NOT SET'}`);
+    return razorpayInstance;
   } catch (error) {
     console.error('❌ Failed to create Razorpay instance:', error);
+    console.error('🔍 Debug info:', {
+      keyId: config.razorpay.keyId || 'NOT SET',
+      keySecret: config.razorpay.keySecret ? 'SET' : 'NOT SET'
+    });
     throw error;
   }
 };
 
-// Create and export Razorpay instance
-export const razorpay = createRazorpayInstance();
+// Export ONLY the getter function - don't create instance during import
+export const getRazorpay = () => createRazorpayInstance();
 
 // Payment constants
 export const PAYMENT_CONFIG = {
@@ -81,4 +93,4 @@ export const rupeesToPaise = (amountInRupees) => {
   return Math.round(amountInRupees * 100);
 };
 
-export default razorpay;
+export default getRazorpay; // Export the function, not an instance

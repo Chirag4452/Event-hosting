@@ -1,16 +1,28 @@
-// Load environment variables from root directory .env file
-import dotenv from 'dotenv';
+// Load environment variables FIRST, before any other imports
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
-// Get the directory path of the current file
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Load .env file from the root directory (two levels up from server/src)
-dotenv.config({ path: join(__dirname, '../../.env') });
+// Load .env file IMMEDIATELY, before importing any other modules
+import dotenv from 'dotenv';
+const envPath = join(__dirname, '../.env');
+console.log('🔍 Looking for .env file at:', envPath);
+const result = dotenv.config({ path: envPath });
 
-// Import required modules
+if (result.error) {
+  console.error('❌ Error loading .env file:', result.error.message);
+} else {
+  console.log('✅ .env file loaded successfully');
+  console.log('🔑 Environment variables loaded:');
+  console.log('  - RAZORPAY_KEY_ID:', process.env.RAZORPAY_KEY_ID ? 'SET' : 'NOT SET');
+  console.log('  - RAZORPAY_KEY_SECRET:', process.env.RAZORPAY_KEY_SECRET ? 'SET' : 'NOT SET');
+  console.log('  - PORT:', process.env.PORT || 'NOT SET');
+  console.log('  - NODE_ENV:', process.env.NODE_ENV || 'NOT SET');
+}
+
+// NOW import other modules (config.js will see the environment variables)
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
