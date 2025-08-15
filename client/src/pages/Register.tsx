@@ -4,6 +4,7 @@ import { registerUser } from '../services/api';
 import type { UserRegistrationData, PaymentData, RegistrationRequest } from '../services/api';
 import ServerStatus from '../components/ServerStatus';
 import axios from 'axios';
+import lgArenaLogo from '../assets/LG-arena-logo.jpg';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -145,20 +146,21 @@ const Register: React.FC = () => {
             <h2 className="text-5xl font-black text-red-600 mb-4 tracking-widest" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
               CHAMPIONSHIP
             </h2>
-                      <div className="flex items-center justify-center space-x-2 mb-6">
-            <span className="text-gray-700 font-semibold tracking-wide text-sm uppercase">ORGANIZED BY</span>
-            <div className="flex items-center space-x-6">
-              <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-200">
-                <span className="font-bold tracking-wide">LG 87 PLAY ARENA</span>
-              </div>
-              <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-red-500 via-blue-500 to-white rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-4 border-white">
-                  <span className="text-lg font-black text-gray-800 tracking-wider">FS</span>
+            <div className="flex items-center justify-center space-x-2 mb-6">
+             <span className="text-gray-700 font-semibold tracking-wide text-sm uppercase">ORGANIZED BY</span>
+             <div className="flex items-center space-x-6">
+                               <div className="text-center">
+                  <img src={lgArenaLogo} alt="LG 87 Play Arena" className="w-34 h-34" />  
                 </div>
-                <span className="text-sm font-semibold text-gray-700 tracking-wide">FLYING SKATERS ACADEMY</span>
-              </div>
-            </div>
-          </div>
+               
+               <div className="text-center">
+                 <div className="w-20 h-20 bg-gradient-to-br from-red-500 via-blue-500 to-white rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-4 border-white">
+                   <span className="text-lg font-black text-gray-800 tracking-wider">FS</span>
+                 </div>
+                 <span className="text-sm font-semibold text-gray-700 tracking-wide">FLYING SKATERS ACADEMY</span>
+               </div>
+             </div>
+           </div>
           </div>
 
           {/* Challenge Banner */}
