@@ -28,7 +28,8 @@ const config = {
       // Allow multiple origins for development and production
       const allowedOrigins = [
         'http://localhost:5173',  // Development
-        'https://nimble-treacle-cbbf6f.netlify.app',  // Production Netlify
+        'https://lg87playarena.netlify.app',  // Current Production Netlify
+        'https://nimble-treacle-cbbf6f.netlify.app',  // Previous Production Netlify
         process.env.FRONTEND_URL  // Custom domain from environment
       ].filter(Boolean); // Remove undefined values
       
