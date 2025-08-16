@@ -25,7 +25,14 @@ const config = {
   // CORS configuration
   cors: {
     get origin() {
-      return process.env.FRONTEND_URL || 'http://localhost:5173';
+      // Allow multiple origins for development and production
+      const allowedOrigins = [
+        'http://localhost:5173',  // Development
+        'https://nimble-treacle-cbbf6f.netlify.app',  // Production Netlify
+        process.env.FRONTEND_URL  // Custom domain from environment
+      ].filter(Boolean); // Remove undefined values
+      
+      return allowedOrigins;
     },
     credentials: true
   },
