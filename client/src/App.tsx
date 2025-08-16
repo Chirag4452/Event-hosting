@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
-import Navigation from "./components/Navigation";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Register />} />
