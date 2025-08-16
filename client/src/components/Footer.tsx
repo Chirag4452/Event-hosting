@@ -14,10 +14,7 @@ const Footer: React.FC = () => {
               Terms of Service
             </a>
             <a href="#" className="text-sm text-slate-300 hover:text-white transition-colors underline">
-              Cookie Policy
-            </a>
-            <a href="#" className="text-sm text-slate-300 hover:text-white transition-colors underline">
-              Data Protection
+              Refund and Cancellation Policy
             </a>
           </div>
           <div className="border-t border-slate-600 pt-4">
