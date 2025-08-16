@@ -42,7 +42,7 @@ const Register: React.FC = () => {
 
   // Grade options for the dropdown
   const gradeOptions = [
-    'Mont','Pre-KG','U-KG','1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+    'Mont','L-KG','U-KG','1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
   ];
 
   // Handle input changes for user registration form
@@ -92,8 +92,8 @@ const Register: React.FC = () => {
       newErrors.parent_phone = 'Phone number must be exactly 10 digits';
     }
 
-    // Grade validation: 1-2 characters
-    if (formData.grade.length < 1 || formData.grade.length > 2) {
+    // Grade validation: must be from the allowed options
+    if (!gradeOptions.includes(formData.grade)) {
       newErrors.grade = 'Please select a valid grade';
     }
 

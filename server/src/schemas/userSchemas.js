@@ -6,7 +6,7 @@ export const userDataSchema = z.object({
     email: z.string().email(),
     parent_name: z.string().min(3).max(50),
     parent_phone: z.string().min(10).max(10),
-    grade: z.string().min(1).max(2),
+    grade: z.string().min(1).max(4),
     category: z.enum(['Beginner', 'Intermediate']),
 });
 
