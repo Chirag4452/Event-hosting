@@ -44,9 +44,6 @@ const Register: React.FC = () => {
   const gradeOptions = [
     'Mont','L-KG','U-KG','1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
   ];
-  
-  // Debug: Log grade options to console
-  console.log('📚 Grade options loaded:', gradeOptions);
 
   // Handle input changes for user registration form
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
@@ -96,11 +93,6 @@ const Register: React.FC = () => {
     }
 
     // Grade validation: must be from the allowed options
-    console.log('🔍 Grade validation debug:', {
-      selectedGrade: formData.grade,
-      gradeOptions: gradeOptions,
-      isIncluded: gradeOptions.includes(formData.grade)
-    });
     if (!gradeOptions.includes(formData.grade)) {
       newErrors.grade = 'Please select a valid grade';
     }

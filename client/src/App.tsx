@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
+import Policies from "./pages/Policies";
 import AboutOrganizers from "./components/AboutOrganizers";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Register />} />
             <Route path="/success" element={<Success />} />
+            <Route path="/policies" element={<Policies />} />
           </Routes>
         </main>
         <AboutOrganizers />

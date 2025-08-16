@@ -7,13 +7,13 @@ const Footer: React.FC = () => {
         <div className="text-center">
           <h3 className="text-lg font-bold mb-4">Legal & Privacy</h3>
           <div className="flex flex-wrap justify-center gap-6 mb-4">
-            <a href="#" className="text-sm text-slate-300 hover:text-white transition-colors underline">
+            <a href="/policies#privacy-policy" className="text-sm text-slate-300 hover:text-white transition-colors underline">
               Privacy Policy
             </a>
-            <a href="#" className="text-sm text-slate-300 hover:text-white transition-colors underline">
-              Terms of Service
+            <a href="/policies#terms-of-service" className="text-sm text-slate-300 hover:text-white transition-colors underline">
+              Terms and Conditions
             </a>
-            <a href="#" className="text-sm text-slate-300 hover:text-white transition-colors underline">
+            <a href="/policies#refund-policy" className="text-sm text-slate-300 hover:text-white transition-colors underline">
               Refund and Cancellation Policy
             </a>
           </div>

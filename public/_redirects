@@ -1,0 +1,10 @@
+# Handle client-side routing for React app
+/*    /index.html   200
+
+# Specific redirects for policies
+/policies    /index.html   200
+/policies/*  /index.html   200
+
+# Alternative approach - force all routes to index.html
+/success     /index.html   200
+/policies    /index.html   200
