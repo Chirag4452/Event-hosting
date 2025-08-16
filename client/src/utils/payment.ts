@@ -211,10 +211,10 @@ const handlePaymentSuccess = async (
  */
 export const getRegistrationFeeDisplay = (category: string): string => {
   const fees: Record<string, string> = {
-    'Beginner': '₹500',
-    'Intermediate': '₹500',
+    'Beginner': '₹5',
+    'Intermediate': '₹5',
   };
-  return fees[category] || '₹500';
+  return fees[category] || '₹5';
 };
 
 /**

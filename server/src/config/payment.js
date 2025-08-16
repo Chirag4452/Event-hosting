@@ -41,8 +41,8 @@ export const PAYMENT_CONFIG = {
   currency: 'INR',
   // Registration fees by category (in paise - 1 INR = 100 paise)
   registrationFees: {
-    'Beginner': 50000, // ₹500
-    'Intermediate': 50000, // ₹500
+    'Beginner': 500, // ₹5 (for testing)
+    'Intermediate': 500, // ₹5 (for testing)
   },
   // Payment options
   options: {

@@ -13,6 +13,7 @@ const ServerStatus: React.FC<ServerStatusProps> = ({ showDetails = false, classN
   const checkServer = async (): Promise<void> => {
     try {
       const response = await checkServerHealth();
+      console.log(response);
       setStatus('online');
       setLastCheck(new Date());
     } catch (error) {
