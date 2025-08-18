@@ -47,16 +47,29 @@ const Register: React.FC = () => {
     if (storedData) {
       try {
         const restoredData = JSON.parse(storedData);
+        console.log('📦 Restoring form data from session storage:', restoredData);
         setFormData(restoredData);
-        console.log('📦 Restored form data from session storage');
       } catch (error) {
         console.error('❌ Error restoring form data:', error);
+        // Check payment completion even if restoration fails
+        checkPaymentCompletion(handlePaymentSuccess, handlePaymentError);
       }
+    } else {
+      // No stored data, just check payment completion
+      console.log('📭 No stored form data found, checking payment completion...');
+      checkPaymentCompletion(handlePaymentSuccess, handlePaymentError);
     }
-    
-    // Then check for payment completion
-    checkPaymentCompletion(handlePaymentSuccess, handlePaymentError);
   }, []);
+
+  // Check payment completion AFTER form data is restored
+  React.useEffect(() => {
+    // Only check payment completion if we have form data (meaning restoration was successful)
+    if (formData.name && formData.email && formData.parent_name && formData.parent_phone && formData.grade && formData.category) {
+      console.log('🔍 Form data is ready, checking payment completion...');
+      console.log('📊 Current form data:', formData);
+      checkPaymentCompletion(handlePaymentSuccess, handlePaymentError);
+    }
+  }, [formData]); // This will trigger whenever formData changes
 
   // Grade options for the dropdown
   const gradeOptions = [
@@ -137,7 +150,14 @@ const Register: React.FC = () => {
     try {
       console.log('💳 Payment successful, completing registration...');
       console.log('📊 Payment data:', paymentVerificationData);
-      console.log('👤 Form data:', formData);
+      console.log('👤 Current form data:', formData);
+      console.log('🔍 Form data validation:');
+      console.log('  - name:', formData.name, 'length:', formData.name?.length);
+      console.log('  - email:', formData.email);
+      console.log('  - parent_name:', formData.parent_name, 'length:', formData.parent_name?.length);
+      console.log('  - parent_phone:', formData.parent_phone, 'length:', formData.parent_phone?.length);
+      console.log('  - grade:', formData.grade);
+      console.log('  - category:', formData.category);
       
       // Prepare registration data with payment information
       const registrationData: RegistrationRequest = {
@@ -179,6 +199,15 @@ const Register: React.FC = () => {
       
       if (axios.isAxiosError(error)) {
         console.error('📡 Axios error details:', error.response?.data);
+        
+        // Log validation error details if available
+        if (error.response?.data?.error === 'VALIDATION_ERROR' && error.response?.data?.details) {
+          console.error('🔍 Validation Error Details:');
+          error.response.data.details.forEach((detail: any, index: number) => {
+            console.error(`  ${index + 1}. Field: ${detail.field}, Error: ${detail.message}`);
+          });
+        }
+        
         errorMessage = error.response?.data?.message || errorMessage;
       } else if (error instanceof Error) {
         errorMessage = error.message;
