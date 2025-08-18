@@ -6,7 +6,7 @@ import type {
   RegistrationRequest,
   PaymentVerificationResponse 
 } from '../services/api';
-import { initiatePayment, getRegistrationFeeDisplay } from '../utils/payment';
+import { handlePayUPayment, getRegistrationFeeDisplay, checkPaymentCompletion } from '../utils/payment';
 import axios from 'axios';
 
 import lgArenaLogo from '../assets/LG-arena-logo.jpg';
@@ -39,6 +39,11 @@ const Register: React.FC = () => {
   const [termsError, setTermsError] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitMessage, setSubmitMessage] = useState<string>('');
+
+  // Check for payment completion when component mounts
+  React.useEffect(() => {
+    checkPaymentCompletion(handlePaymentSuccess, handlePaymentError);
+  }, []);
 
   // Grade options for the dropdown
   const gradeOptions = [
@@ -185,8 +190,8 @@ const Register: React.FC = () => {
     setSubmitMessage('Initializing payment...');
 
     try {
-      // Initiate payment process
-      await initiatePayment(
+      // Initiate PayU payment process
+      handlePayUPayment(
         formData,
         handlePaymentSuccess,
         handlePaymentError
@@ -518,7 +523,7 @@ const Register: React.FC = () => {
                     </span>
                   </div>
                   <p className="text-xs text-gray-600 mt-1">
-                    Payment will be processed securely via Razorpay
+                    Payment will be processed securely via PayU
                   </p>
                 </div>
               )}
@@ -617,7 +622,7 @@ const Register: React.FC = () => {
                 <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                 </svg>
-                <span>Secure payment via Razorpay</span>
+                <span>Secure payment via PayU</span>
               </div>
             </div>
 

@@ -27,29 +27,17 @@ const config = {
     get origin() {
       // Allow multiple origins for development and production
       const allowedOrigins = [
-        'http://localhost:5173',  // Development
+        // Production URLs - PRIORITY FOR PRODUCTION
         'https://lg87playarena.netlify.app',  // Current Production Netlify
-        'https://nimble-treacle-cbbf6f.netlify.app',  // Previous Production Netlify
-        process.env.FRONTEND_URL  // Custom domain from environment
+        process.env.FRONTEND_URL,  // Custom domain from environment
+        // Development URLs - COMMENT OUT FOR PRODUCTION
+        // 'http://localhost:5173',  // Development - React dev server
+        // 'http://localhost:3000',  // Alternative React dev server port
       ].filter(Boolean); // Remove undefined values
       
       return allowedOrigins;
     },
     credentials: true
-  },
-  
-  // Razorpay configuration - DYNAMIC GETTERS
-  razorpay: {
-    get keyId() {
-      const value = process.env.RAZORPAY_KEY_ID || '';
-      console.log('🔑 Getting Razorpay keyId:', value ? 'SET' : 'NOT SET');
-      return value;
-    },
-    get keySecret() {
-      const value = process.env.RAZORPAY_KEY_SECRET || '';
-      console.log('🔑 Getting Razorpay keySecret:', value ? 'SET' : 'NOT SET');
-      return value;
-    }
   }
 };
 

@@ -2,7 +2,10 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
+  // For production - use render URL
   baseURL: 'https://event-hosting-88a0.onrender.com/api',
+  // For local development - uncomment the line below and comment the line above
+  // baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -17,62 +20,6 @@ export interface UserRegistrationData {
   parent_phone: string;
   grade: string;
   category: string;
-}
-
-export interface PaymentData {
-  amount: number;
-  currency: string;
-  order_id: string;
-}
-
-export interface PaymentOrderRequest {
-  category: string;
-  user_email: string;
-  user_name: string;
-}
-
-export interface PaymentOrderResponse {
-  order_id: string;
-  amount: number;
-  amount_display: string;
-  currency: string;
-  category: string;
-  key_id: string;
-  options: RazorpayOptions;
-}
-
-export interface RazorpayOptions {
-  key: string;
-  amount: number;
-  currency: string;
-  name: string;
-  description: string;
-  order_id: string;
-  prefill: {
-    name: string;
-    email: string;
-    contact?: string;
-  };
-  theme: {
-    color: string;
-  };
-  modal: {
-    ondismiss: () => void;
-  };
-  handler: (response: RazorpayResponse) => void;
-}
-
-export interface RazorpayResponse {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-}
-
-export interface PaymentVerificationRequest {
-  razorpay_order_id: string;
-  razorpay_payment_id: string;
-  razorpay_signature: string;
-  user_data: UserRegistrationData;
 }
 
 export interface PaymentVerificationResponse {
@@ -112,19 +59,6 @@ export const registerUser = (registrationData: RegistrationRequest) => {
 
 export const getAllRegistrations = () => {
   return api.get('/registrations');
-};
-
-// Payment API functions
-export const createPaymentOrder = (orderRequest: PaymentOrderRequest) => {
-  return api.post('/payment/create-order', orderRequest);
-};
-
-export const verifyPayment = (verificationRequest: PaymentVerificationRequest) => {
-  return api.post('/payment/verify', verificationRequest);
-};
-
-export const getPaymentInfo = (category: string) => {
-  return api.get(`/payment/info?category=${category}`);
 };
 
 // Health check endpoint
