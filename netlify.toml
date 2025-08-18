@@ -3,6 +3,13 @@
   command = "cd client && pnpm build"
 
 [[redirects]]
+  from = "/register"
+  to = "/index.html"
+  status = 200
+  force = true
+  conditions = {Method = ["GET", "POST"]}
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

@@ -65,17 +65,34 @@ export const checkPaymentCompletion = (
   try {
     console.log('🔍 Checking for payment completion...');
     
-    // Check if user returned from payment
+    // Check if user returned from payment (URL parameters or form data)
     const urlParams = new URLSearchParams(window.location.search);
     console.log('📋 URL Parameters:', Object.fromEntries(urlParams.entries()));
     
-    // Check multiple possible PayU response parameters
-    const paymentStatus = urlParams.get('payment_status') || 
+    // Also check if we have PayU POST data in the URL hash or body
+    let paymentData: any = {};
+    
+    // Try to get data from URL params first
+    for (const [key, value] of urlParams.entries()) {
+      paymentData[key] = value;
+    }
+    
+    // Check for PayU response data (they might use different parameter names)
+    const paymentStatus = paymentData.payment_status || 
+                         paymentData.status || 
+                         paymentData.payu_status ||
+                         paymentData.result ||
+                         urlParams.get('payment_status') || 
                          urlParams.get('status') || 
                          urlParams.get('payu_status') ||
                          urlParams.get('result');
                          
-    const transactionId = urlParams.get('txnid') || 
+    const transactionId = paymentData.txnid || 
+                         paymentData.transaction_id || 
+                         paymentData.payment_id ||
+                         paymentData.payu_payment_id ||
+                         paymentData.mihpayid ||
+                         urlParams.get('txnid') || 
                          urlParams.get('transaction_id') || 
                          urlParams.get('payment_id') ||
                          urlParams.get('payu_payment_id') ||
