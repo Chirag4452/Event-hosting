@@ -290,6 +290,18 @@ const Register: React.FC = () => {
                 <p className="text-slate-900 font-bold text-base sm:text-lg tracking-wide">LG 87 PLAY ARENA</p>
                 <p className="text-slate-600 font-semibold text-sm sm:text-base">INDOOR SKATING RINK</p>
                 <p className="text-slate-700 font-medium text-sm sm:text-base">Tippasandara</p>
+                <a 
+                  href="https://maps.app.goo.gl/d4BJju25yaCgJkw4A?g_st=ipc" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center space-x-2 hover:text-blue-600 transition-colors mt-1"
+                >
+                  <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span className="text-slate-600 underline text-xs">View on map</span>
+                </a>
               </div>
             </div>
           </div>
