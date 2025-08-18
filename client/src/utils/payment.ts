@@ -111,12 +111,15 @@ export const checkPaymentCompletion = (
         
         console.log('💳 Payment data prepared:', paymentData);
         
-        // Clear stored data
-        sessionStorage.removeItem('pendingRegistration');
-        
-        // Call success callback
+        // Call success callback FIRST, then clear stored data
         console.log('🚀 Calling success callback...');
         onSuccess(paymentData);
+        
+        // Clear stored data AFTER success callback is processed
+        setTimeout(() => {
+          sessionStorage.removeItem('pendingRegistration');
+          console.log('🗑️ Cleared stored registration data');
+        }, 100);
       } else {
         console.log('❌ No stored registration data found');
         onError('Registration data not found. Please try registering again.');

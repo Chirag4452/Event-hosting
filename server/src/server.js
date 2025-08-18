@@ -63,6 +63,17 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Test registration endpoint for debugging
+app.post('/api/test-registration', (req, res) => {
+  console.log('🧪 Test registration endpoint hit:', req.body);
+  res.status(200).json({
+    success: true,
+    message: 'Test endpoint working',
+    receivedData: req.body,
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Root route
 app.get('/', (req, res) => {
   res.status(200).json({
