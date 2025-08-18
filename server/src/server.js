@@ -74,37 +74,28 @@ app.post('/api/test-registration', (req, res) => {
   });
 });
 
-// PayU redirect handler - converts POST to GET redirect
-app.post('/api/payu-redirect', (req, res) => {
-  console.log('💳 PayU redirect received:', req.body);
+// PayU webhook endpoint for handling payment confirmations
+app.post('/api/payu-webhook', express.urlencoded({ extended: true }), (req, res) => {
+  console.log('💳 PayU webhook received:', req.body);
   
   try {
-    // Convert POST data to URL parameters
-    const params = new URLSearchParams();
+    const { status, txnid, amount, productinfo, firstname, email, phone } = req.body;
     
-    // Add all PayU response parameters
-    Object.keys(req.body).forEach(key => {
-      if (req.body[key] !== undefined && req.body[key] !== null) {
-        params.append(key, req.body[key]);
-      }
-    });
-    
-    // Redirect to frontend with GET parameters
-    const frontendUrl = process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app';
-    const redirectUrl = `${frontendUrl}/?${params.toString()}`;
-    
-    console.log('🔄 Redirecting to frontend:', redirectUrl);
-    
-    // Redirect to frontend
-    res.redirect(302, redirectUrl);
-    
+    if (status === 'success') {
+      // Payment successful - redirect to frontend with success parameters
+      const redirectUrl = `${process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app'}/register?payment_status=success&txnid=${txnid}&amount=${amount}`;
+      console.log('✅ Payment successful, redirecting to:', redirectUrl);
+      return res.redirect(redirectUrl);
+    } else {
+      // Payment failed - redirect to frontend with failure parameters
+      const redirectUrl = `${process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app'}/register?payment_status=failed&txnid=${txnid}`;
+      console.log('❌ Payment failed, redirecting to:', redirectUrl);
+      return res.redirect(redirectUrl);
+    }
   } catch (error) {
-    console.error('❌ PayU redirect error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'PayU redirect failed',
-      error: error.message
-    });
+    console.error('❌ Error processing PayU webhook:', error);
+    const redirectUrl = `${process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app'}/register?payment_status=error`;
+    return res.redirect(redirectUrl);
   }
 });
 
