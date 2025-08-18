@@ -2,3 +2,7 @@
   publish = "client/dist"
   command = "cd client && pnpm build"
 
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
