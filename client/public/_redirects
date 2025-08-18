@@ -1,2 +1,5 @@
+# Handle PayU payment redirects
+/register    /index.html   200
+
 # Handle client-side routing for React app
 /*    /index.html   200
