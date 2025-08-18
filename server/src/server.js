@@ -78,24 +78,28 @@ app.post('/api/test-registration', (req, res) => {
 const handlePayUConfirmation = (req, res) => {
   console.log('💳 PayU payment confirmation received:', req.body);
   console.log('📍 Request URL:', req.originalUrl);
+  console.log('🌐 Environment FRONTEND_URL:', process.env.FRONTEND_URL);
   
   try {
     const { status, txnid, amount, productinfo, firstname, email, phone } = req.body;
     
+    // Always use production URL for PayU redirects (never localhost)
+    const productionUrl = 'https://lg87playarena.netlify.app';
+    
     if (status === 'success') {
       // Payment successful - redirect to frontend with success parameters
-      const redirectUrl = `${process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app'}/register?payment_status=success&txnid=${txnid}&amount=${amount}`;
+      const redirectUrl = `${productionUrl}/register?payment_status=success&txnid=${txnid}&amount=${amount}`;
       console.log('✅ Payment successful, redirecting to:', redirectUrl);
       return res.redirect(redirectUrl);
     } else {
       // Payment failed - redirect to frontend with failure parameters
-      const redirectUrl = `${process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app'}/register?payment_status=failed&txnid=${txnid}`;
+      const redirectUrl = `${productionUrl}/register?payment_status=failed&txnid=${txnid}`;
       console.log('❌ Payment failed, redirecting to:', redirectUrl);
       return res.redirect(redirectUrl);
     }
   } catch (error) {
     console.error('❌ Error processing PayU confirmation:', error);
-    const redirectUrl = `${process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app'}/register?payment_status=error`;
+    const redirectUrl = `${productionUrl}/register?payment_status=error`;
     return res.redirect(redirectUrl);
   }
 };
