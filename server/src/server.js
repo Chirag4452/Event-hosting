@@ -74,6 +74,40 @@ app.post('/api/test-registration', (req, res) => {
   });
 });
 
+// PayU redirect handler - converts POST to GET redirect
+app.post('/api/payu-redirect', (req, res) => {
+  console.log('💳 PayU redirect received:', req.body);
+  
+  try {
+    // Convert POST data to URL parameters
+    const params = new URLSearchParams();
+    
+    // Add all PayU response parameters
+    Object.keys(req.body).forEach(key => {
+      if (req.body[key] !== undefined && req.body[key] !== null) {
+        params.append(key, req.body[key]);
+      }
+    });
+    
+    // Redirect to frontend with GET parameters
+    const frontendUrl = process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app';
+    const redirectUrl = `${frontendUrl}/?${params.toString()}`;
+    
+    console.log('🔄 Redirecting to frontend:', redirectUrl);
+    
+    // Redirect to frontend
+    res.redirect(302, redirectUrl);
+    
+  } catch (error) {
+    console.error('❌ PayU redirect error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'PayU redirect failed',
+      error: error.message
+    });
+  }
+});
+
 // Root route
 app.get('/', (req, res) => {
   res.status(200).json({
