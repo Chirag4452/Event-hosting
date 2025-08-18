@@ -74,9 +74,10 @@ app.post('/api/test-registration', (req, res) => {
   });
 });
 
-// PayU webhook endpoint for handling payment confirmations
-app.post('/api/payu-webhook', express.urlencoded({ extended: true }), (req, res) => {
-  console.log('💳 PayU webhook received:', req.body);
+// PayU payment confirmation handler function
+const handlePayUConfirmation = (req, res) => {
+  console.log('💳 PayU payment confirmation received:', req.body);
+  console.log('📍 Request URL:', req.originalUrl);
   
   try {
     const { status, txnid, amount, productinfo, firstname, email, phone } = req.body;
@@ -93,11 +94,21 @@ app.post('/api/payu-webhook', express.urlencoded({ extended: true }), (req, res)
       return res.redirect(redirectUrl);
     }
   } catch (error) {
-    console.error('❌ Error processing PayU webhook:', error);
+    console.error('❌ Error processing PayU confirmation:', error);
     const redirectUrl = `${process.env.FRONTEND_URL || 'https://lg87playarena.netlify.app'}/register?payment_status=error`;
     return res.redirect(redirectUrl);
   }
-});
+};
+
+// PayU webhook endpoint for handling payment confirmations
+app.post('/api/payu-webhook', express.urlencoded({ extended: true }), handlePayUConfirmation);
+
+// PayU redirect endpoint (alternative URL that PayU might use)
+app.post('/api/payu-redirect', express.urlencoded({ extended: true }), handlePayUConfirmation);
+
+// Also handle GET requests (in case PayU sends GET instead of POST)
+app.get('/api/payu-webhook', handlePayUConfirmation);
+app.get('/api/payu-redirect', handlePayUConfirmation);
 
 // Root route
 app.get('/', (req, res) => {
