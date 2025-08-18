@@ -28,12 +28,12 @@ export const formatAmount = (amountInPaise: number): string => {
 
 /**
  * Handle PayU payment redirect
- * @param {UserRegistrationData} userData - User registration data
+ * @param {UserRegistrationData} _userData - User registration data (not used in redirect)
  * @param {Function} _onSuccess - Success callback function (not used in redirect)
  * @param {Function} onError - Error callback function
  */
 export const handlePayUPayment = (
-  userData: UserRegistrationData,
+  _userData: UserRegistrationData,
   _onSuccess: (paymentData: PaymentVerificationResponse) => void,
   onError: (error: string) => void
 ): void => {

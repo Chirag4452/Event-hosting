@@ -35,17 +35,8 @@ const PaymentDebug: React.FC = () => {
 
   const simulatePaymentSuccess = () => {
     // Simulate successful payment return
-    const mockPaymentData = {
-      payment_id: 'TEST_PAYMENT_123',
-      order_id: 'TEST_ORDER_456',
-      amount_paid: 500,
-      amount_display: '₹5',
-      currency: 'INR',
-      status: 'completed',
-      method: 'PayU',
-      verified_at: new Date().toISOString(),
-    };
-
+    // Note: mockPaymentData is not used in this simulation
+    
     // Store mock data
     sessionStorage.setItem('pendingRegistration', JSON.stringify({
       name: 'Test User',
