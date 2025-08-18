@@ -42,6 +42,19 @@ const Register: React.FC = () => {
 
   // Check for payment completion when component mounts
   React.useEffect(() => {
+    // First, try to restore form data if it exists
+    const storedData = sessionStorage.getItem('pendingRegistration');
+    if (storedData) {
+      try {
+        const restoredData = JSON.parse(storedData);
+        setFormData(restoredData);
+        console.log('📦 Restored form data from session storage');
+      } catch (error) {
+        console.error('❌ Error restoring form data:', error);
+      }
+    }
+    
+    // Then check for payment completion
     checkPaymentCompletion(handlePaymentSuccess, handlePaymentError);
   }, []);
 
@@ -123,6 +136,8 @@ const Register: React.FC = () => {
   const handlePaymentSuccess = async (paymentVerificationData: PaymentVerificationResponse): Promise<void> => {
     try {
       console.log('💳 Payment successful, completing registration...');
+      console.log('📊 Payment data:', paymentVerificationData);
+      console.log('👤 Form data:', formData);
       
       // Prepare registration data with payment information
       const registrationData: RegistrationRequest = {
@@ -137,9 +152,13 @@ const Register: React.FC = () => {
           verified_at: paymentVerificationData.verified_at,
         }
       };
+      
+      console.log('📝 Registration data prepared:', registrationData);
 
       // Register user with payment information
+      console.log('🚀 Sending registration request to server...');
       const response = await registerUser(registrationData);
+      console.log('📡 Server response:', response);
 
       if (response.data.success) {
         console.log('✅ Registration completed successfully');
@@ -147,9 +166,11 @@ const Register: React.FC = () => {
         
         // Navigate to success page after a short delay
         setTimeout(() => {
+          console.log('🎯 Navigating to success page...');
           navigate('/success');
         }, 1500);
       } else {
+        console.log('❌ Registration failed:', response.data);
         setSubmitMessage(response.data.message || 'Registration failed after payment. Please contact support.');
       }
     } catch (error: unknown) {
@@ -157,6 +178,7 @@ const Register: React.FC = () => {
       let errorMessage = 'Registration failed after payment. Please contact support with your payment ID.';
       
       if (axios.isAxiosError(error)) {
+        console.error('📡 Axios error details:', error.response?.data);
         errorMessage = error.response?.data?.message || errorMessage;
       } else if (error instanceof Error) {
         errorMessage = error.message;
@@ -190,6 +212,10 @@ const Register: React.FC = () => {
     setSubmitMessage('Initializing payment...');
 
     try {
+      // Store form data in sessionStorage before redirecting
+      sessionStorage.setItem('pendingRegistration', JSON.stringify(formData));
+      console.log('💾 Stored form data in session storage before PayU redirect');
+      
       // Initiate PayU payment process
       handlePayUPayment(
         formData,
