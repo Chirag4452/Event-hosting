@@ -29,12 +29,12 @@ export const formatAmount = (amountInPaise: number): string => {
 /**
  * Handle PayU payment redirect
  * @param {UserRegistrationData} userData - User registration data
- * @param {Function} onSuccess - Success callback function
+ * @param {Function} _onSuccess - Success callback function (not used in redirect)
  * @param {Function} onError - Error callback function
  */
 export const handlePayUPayment = (
   userData: UserRegistrationData,
-  onSuccess: (paymentData: PaymentVerificationResponse) => void,
+  _onSuccess: (paymentData: PaymentVerificationResponse) => void,
   onError: (error: string) => void
 ): void => {
   try {
@@ -71,7 +71,8 @@ export const checkPaymentCompletion = (
       // Get stored registration data
       const storedData = sessionStorage.getItem('pendingRegistration');
       if (storedData) {
-        const userData: UserRegistrationData = JSON.parse(storedData);
+        // Parse stored data to verify it exists (we don't need the actual data here)
+        JSON.parse(storedData);
         
         // Create mock payment verification response for PayU
         const paymentData: PaymentVerificationResponse = {
