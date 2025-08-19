@@ -27,7 +27,8 @@ const Register: React.FC = () => {
     parent_name: '',
     parent_phone: '',
     grade: '',
-    category: ''
+    category: '',
+    gender: ''
   });
 
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
@@ -65,7 +66,7 @@ const Register: React.FC = () => {
   // Check payment completion AFTER form data is restored
   React.useEffect(() => {
     // Only check payment completion if we have form data (meaning restoration was successful)
-    if (formData.name && formData.email && formData.parent_name && formData.parent_phone && formData.grade && formData.category) {
+    if (formData.name && formData.email && formData.parent_name && formData.parent_phone && formData.grade && formData.category && formData.gender) {
       console.log('🔍 Form data is ready, checking payment completion...');
       console.log('📊 Current form data:', formData);
       checkPaymentCompletion(handlePaymentSuccess, handlePaymentError);
@@ -134,6 +135,11 @@ const Register: React.FC = () => {
       newErrors.category = 'Please select a skill level';
     }
 
+    // Gender validation: must be selected
+    if (!formData.gender) {
+      newErrors.gender = 'Please select a gender';
+    }
+
     // Terms validation: must be accepted
     if (!termsAccepted) {
       setTermsError('Please accept the terms and conditions to continue.');
@@ -159,6 +165,7 @@ const Register: React.FC = () => {
       console.log('  - parent_phone:', formData.parent_phone, 'length:', formData.parent_phone?.length);
       console.log('  - grade:', formData.grade);
       console.log('  - category:', formData.category);
+      console.log('  - gender:', formData.gender);
       
       // Prepare registration data with payment information
       const registrationData: RegistrationRequest = {
@@ -298,7 +305,7 @@ const Register: React.FC = () => {
               LG 87 1ST SKATING
             </h1>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-700 mb-2 sm:mb-4 tracking-widest" style={{ fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif' }}>
-              CHAMPIONSHIP
+              CHAMPIONSHIP 2025
             </h2>
             <div className="flex items-center justify-center space-x-2 mb-6">
              <span className="text-slate-600 font-semibold tracking-wide text-sm uppercase">ORGANIZED BY</span>
@@ -504,6 +511,29 @@ const Register: React.FC = () => {
               </select>
               {errors.grade && (
                 <p className="mt-1 text-xs text-red-600">{errors.grade}</p>
+              )}
+            </div>
+
+            {/* Gender Selection */}
+            <div className="max-w-xs sm:max-w-sm mx-auto">
+              <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
+                Gender *
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                className={`w-full px-2 py-1.5 text-xs border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.gender ? 'border-red-300 ring-red-200' : 'border-gray-300'
+                }`}
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              {errors.gender && (
+                <p className="mt-1 text-xs text-red-600">{errors.gender}</p>
               )}
             </div>
 

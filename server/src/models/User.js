@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['Level 1', 'Level 2', 'Level 3'],
     },
+    gender: {
+        type: String,
+        required: true,
+        enum: ['male', 'female'],
+    },
     // Payment information
     payment_details: {
         payment_id: {

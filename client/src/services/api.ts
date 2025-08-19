@@ -20,6 +20,7 @@ export interface UserRegistrationData {
   parent_phone: string;
   grade: string;
   category: string;
+  gender: string;
 }
 
 export interface PaymentVerificationResponse {
