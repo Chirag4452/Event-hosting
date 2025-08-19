@@ -44,7 +44,7 @@ const PaymentDebug: React.FC = () => {
       parent_name: 'Test Parent',
       parent_phone: '1234567890',
       grade: '5',
-      category: 'Beginner'
+      category: 'Level 1'
     }));
 
     // Redirect with success parameters

@@ -6,8 +6,9 @@ export const PAYMENT_CONFIG = {
   currency: 'INR',
   // Registration fees by category (in paise - 1 INR = 100 paise)
   registrationFees: {
-    'Beginner': 500, // ₹5 (for testing)
-    'Intermediate': 500, // ₹5 (for testing)
+    'Level 1': 500, // ₹5 (for testing)
+    'Level 2': 500, // ₹5 (for testing)
+    'Level 3': 500, // ₹5 (for testing)
   },
   // Payment options
   options: {
@@ -37,7 +38,7 @@ export const PAYMENT_CONFIG = {
  * @returns {number} Fee amount in paise
  */
 export const getRegistrationFee = (category) => {
-  return PAYMENT_CONFIG.registrationFees[category] || PAYMENT_CONFIG.registrationFees['Beginner'];
+  return PAYMENT_CONFIG.registrationFees[category] || PAYMENT_CONFIG.registrationFees['Level 1'];
 };
 
 /**

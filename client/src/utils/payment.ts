@@ -11,8 +11,9 @@ import type {
  */
 export const getRegistrationFeeDisplay = (category: string): string => {
   const fees: Record<string, string> = {
-    'Beginner': '₹5',
-    'Intermediate': '₹5',
+    'Level 1': '₹500',
+    'Level 2': '₹500',
+    'Level 3': '₹500',
   };
   return fees[category] || '₹5';
 };

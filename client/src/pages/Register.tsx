@@ -12,7 +12,8 @@ import axios from 'axios';
 import lgArenaLogo from '../assets/LG-arena-logo.jpg';
 import fsLogo from '../assets/Flying-skater-logo.jpg';
 import bg from '../assets/beginner.jpg';
-import inter from '../assets/intermediate.jpg';
+import inter from '../assets/L2.jpg';
+import l3 from '../assets/L3.jpg';
 
 import { termsAndConditions } from '../data/termsAndConditions';
 
@@ -517,52 +518,77 @@ const Register: React.FC = () => {
                 <div className="flex justify-center space-x-4">
                   <div 
                     className={`text-center cursor-pointer transition-all duration-200 ${
-                      formData.category === 'Beginner' 
+                      formData.category === 'Level 1' 
                         ? 'scale-105' 
                         : 'hover:scale-105'
                     }`}
-                    onClick={() => setFormData(prev => ({ ...prev, category: 'Beginner' }))}
+                    onClick={() => setFormData(prev => ({ ...prev, category: 'Level 1' }))}
                   >
                     <img 
                       src={bg} 
                       alt="Beginner Level" 
                       className={`w-46 h-20 object-cover rounded-lg border-2 transition-all duration-200 ${
-                        formData.category === 'Beginner' 
+                        formData.category === 'Level 1' 
                           ? 'border-blue-500 shadow-lg' 
                           : 'border-gray-200 hover:border-blue-300'
                       }`}
                     />
                     <p className={`text-xs mt-1 font-medium ${
-                      formData.category === 'Beginner' 
+                      formData.category === 'Level 1' 
                         ? 'text-blue-600' 
                         : 'text-gray-600'
                     }`}>
-                      Beginner
+                      Level 1
                     </p>
                   </div>
                   <div 
                     className={`text-center cursor-pointer transition-all duration-200 ${
-                      formData.category === 'Intermediate' 
+                      formData.category === 'Level 2' 
                         ? 'scale-105' 
                         : 'hover:scale-105'
                     }`}
-                    onClick={() => setFormData(prev => ({ ...prev, category: 'Intermediate' }))}
+                    onClick={() => setFormData(prev => ({ ...prev, category: 'Level 2' }))}
                   >
                     <img 
                       src={inter} 
                       alt="Intermediate Level" 
                       className={`w-42 h-20 object-cover rounded-lg border-2 transition-all duration-200 ${
-                        formData.category === 'Intermediate' 
+                        formData.category === 'Level 2' 
                           ? 'border-blue-500 shadow-lg' 
                           : 'border-gray-200 hover:border-blue-300'
                       }`}
                     />
                     <p className={`text-xs mt-1 font-medium ${
-                      formData.category === 'Intermediate' 
+                      formData.category === 'Level 2' 
                         ? 'text-blue-600' 
                         : 'text-gray-600'
                     }`}>
-                      Intermediate
+                      Level 2
+                    </p>
+                  </div>
+                  <div 
+                    className={`text-center cursor-pointer transition-all duration-200 ${
+                      formData.category === 'Level 3' 
+                        ? 'scale-105' 
+                        : 'hover:scale-105'
+                    }`}
+                    onClick={() => setFormData(prev => ({ ...prev, category: 'Level 3' }))}
+                  >
+                    <img 
+                      src={l3} 
+                      alt="Advanced Level" 
+                      className={`w-42 h-20 object-cover rounded-lg border-2 transition-all duration-200 ${
+                        formData.category === 'Level 3' 
+                          ? 'border-blue-500 shadow-lg' 
+                          : 'border-gray-200 hover:border-blue-300'
+                      }`}
+                    />
+                    <p className={`text-xs mt-1 font-medium ${
+                      formData.category === 'Level 3' 
+                        ? 'text-blue-600' 
+                        : 'text-gray-600'
+                    }`}>
+                      Level 3
                     </p>
                   </div>
                 </div>

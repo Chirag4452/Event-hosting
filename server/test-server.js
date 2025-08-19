@@ -23,7 +23,7 @@ async function testEndpoints() {
         parent_name: 'Test Parent',
         parent_phone: '1234567890',
         grade: '5',
-        category: 'Beginner'
+        category: 'Level 1'
       },
       payment: {
         payment_id: 'TEST_123',

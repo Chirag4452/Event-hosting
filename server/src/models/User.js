@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['Beginner', 'Intermediate'],
+        enum: ['Level 1', 'Level 2', 'Level 3'],
     },
     // Payment information
     payment_details: {

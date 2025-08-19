@@ -7,7 +7,7 @@ export const userDataSchema = z.object({
     parent_name: z.string().min(3).max(50),
     parent_phone: z.string().min(10).max(10),
     grade: z.string().min(1).max(4),
-    category: z.enum(['Beginner', 'Intermediate']),
+    category: z.enum(['Level 1', 'Level 2', 'Level 3']),
 });
 
 // Complete registration request schema
