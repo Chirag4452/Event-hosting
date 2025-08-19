@@ -32,16 +32,7 @@ export const registerUser = async (req, res) => {
     console.log('👤 User data:', userData);
     console.log('💳 Payment data:', paymentData);
 
-    // Check if user with same email already exists
-    const existingUser = await User.findOne({ email: userData.email });
-    if (existingUser) {
-      console.log('❌ User already exists with email:', userData.email);
-      return res.status(400).json({
-        success: false,
-        message: 'User with this email already exists',
-        error: 'EMAIL_ALREADY_EXISTS'
-      });
-    }
+    // Allow duplicate emails - users can register multiple times with same email
 
     // Prepare user data with payment information
     const userDataWithPayment = {
@@ -103,10 +94,12 @@ export const registerUser = async (req, res) => {
 
     // Handle database errors
     if (error.code === 11000) {
+      // Handle other unique constraint violations (not email since we allow duplicate emails)
+      console.error('❌ Database unique constraint violation:', error);
       return res.status(400).json({
         success: false,
-        message: 'User with this email already exists',
-        error: 'DUPLICATE_EMAIL'
+        message: 'A database constraint violation occurred',
+        error: 'CONSTRAINT_VIOLATION'
       });
     }
 

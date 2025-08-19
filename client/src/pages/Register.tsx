@@ -515,7 +515,7 @@ const Register: React.FC = () => {
               
               {/* Skill Level Images - Clickable Selection */}
               <div className="mb-3">
-                <div className="flex justify-center space-x-4">
+                <div className="flex flex-col items-center space-y-4">
                   <div 
                     className={`text-center cursor-pointer transition-all duration-200 ${
                       formData.category === 'Level 1' 
