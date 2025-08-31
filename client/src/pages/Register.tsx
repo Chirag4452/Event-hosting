@@ -211,7 +211,7 @@ const Register: React.FC = () => {
         // Log validation error details if available
         if (error.response?.data?.error === 'VALIDATION_ERROR' && error.response?.data?.details) {
           console.error('🔍 Validation Error Details:');
-          error.response.data.details.forEach((detail: any, index: number) => {
+          error.response.data.details.forEach((detail: { field: string; message: string }, index: number) => {
             console.error(`  ${index + 1}. Field: ${detail.field}, Error: ${detail.message}`);
           });
         }
@@ -280,8 +280,8 @@ const Register: React.FC = () => {
             <div className="flex items-center space-x-4 mb-4 sm:mb-0">
               <img src={lgArenaLogo} alt="LG 87 Play Arena" className="w-12 h-12" />
               <div>
-                <h3 className="text-lg font-bold text-slate-800">LG 87 Skating Championship</h3>
-                <p className="text-sm text-slate-600">Professional Skating Event</p>
+                <h3 className="text-lg font-bold text-slate-800">LG 87 PLAY ARENA</h3>
+                <p className="text-sm text-slate-600">SPORTS CLUB</p>
               </div>
             </div>
             <nav className="flex space-x-6">
@@ -709,8 +709,21 @@ const Register: React.FC = () => {
               )}
             </div>
 
-            {/* Submit Button */}
+            {/* Payment Instructions */}
             <div className="pt-4 max-w-xs sm:max-w-sm mx-auto">
+              <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <div className="flex items-start space-x-2">
+                  <svg className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  <div className="text-sm text-amber-800">
+                    <p className="font-medium mb-1">Important Payment Instructions:</p>
+                    <p>Please wait until you see the "Registration Successful" page after completing your payment. Do not close this browser tab or navigate away during the payment process.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
